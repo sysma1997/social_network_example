@@ -1,3 +1,3 @@
-import { StringValue } from "src/core/shared/domain/StringValue";
+import { StringValue } from "../../shared/domain/StringValue";
 
 export class UserName extends StringValue { }

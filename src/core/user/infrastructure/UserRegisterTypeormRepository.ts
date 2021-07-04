@@ -1,5 +1,5 @@
 import { User } from "../domain/User";
-import { User as UserEntity } from 'src/core/shared/infrastructure/storage/entities/User'
+import { User as UserEntity } from '../../shared/infrastructure/storage/entities/User'
 import { Connection } from "typeorm";
 import { UserRegisterRepository } from "../domain/UserRegisterRepository";
 
@@ -23,8 +23,6 @@ export class UserRegisterTypeormRepository implements UserRegisterRepository {
             user.valid.value
         )
 
-        await manager.save<UserEntity>(userEntity).catch(error => {
-            throw new Error(`UserRegisterTypeormRepository: Error -> ${error}`)
-        })
+        await manager.save<UserEntity>(userEntity)
     }
 }

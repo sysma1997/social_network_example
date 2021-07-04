@@ -16,13 +16,13 @@ export class UserRegisterController {
     }
 
     private init() {
-        this.router.get("/", async (req, res) => {
+        this.router.post("/", async (req, res) => {
             const body = req.body
 
             if ((!body.id || typeof(body.id) !== "string") || 
                 (!body.name || typeof(body.name) !== "string") || 
                 (!body.birthday || typeof(body.birthday) !== "string") || 
-                (!body.gender || typeof(body.gender) !== "boolean") || 
+                typeof(body.gender) !== "boolean" || 
                 (!body.username || typeof(body.username) !== "string") || 
                 (!body.password || typeof(body.password) !== "string")) {
                 let message = ""
@@ -39,9 +39,7 @@ export class UserRegisterController {
                     message += "Birthday is required.\n"
                 else if(typeof(body.birthday) !== "string")
                     message += "Birthday not is string.\n"
-                if(!body.gender) 
-                    message += "Gender is required.\n"
-                else if(typeof(body.gender) !== "boolean")
+                if(typeof(body.gender) !== "boolean")
                     message += "Gender not is boolean.\n"
                 if(!body.username) 
                     message += "Username is required.\n"
@@ -57,7 +55,7 @@ export class UserRegisterController {
             }
 
             const id: string = body.id
-            const name: string = body.Name
+            const name: string = body.name
             const birthday: Date = new Date(body.birthday)
             const gender: boolean = body.gender
             const username: string = body.username

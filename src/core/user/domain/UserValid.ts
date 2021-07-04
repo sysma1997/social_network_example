@@ -1,3 +1,3 @@
-import { BooleanValue } from "src/core/shared/domain/BooleanValue";
+import { BooleanValue } from "../../shared/domain/BooleanValue";
 
 export class UserValid extends BooleanValue { }
