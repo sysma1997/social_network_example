@@ -1,5 +1,5 @@
-import { User } from "src/core/shared/infrastructure/storage/entities/User";
+import { User } from "./User";
 
 export interface UserRegisterRepository {
-    register(user: User): void
+    register(user: User): Promise<void>
 }

@@ -1,3 +1,3 @@
-import { UuidValue } from "src/core/shared/infrastructure/domain/UuidValue";
+import { UuidValue } from "src/core/shared/domain/UuidValue";
 
 export class UserId extends UuidValue { }

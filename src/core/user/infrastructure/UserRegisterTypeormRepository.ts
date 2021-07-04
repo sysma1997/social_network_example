@@ -1,4 +1,5 @@
-import { User } from "src/core/shared/infrastructure/storage/entities/User";
+import { User } from "../domain/User";
+import { User as UserEntity } from 'src/core/shared/infrastructure/storage/entities/User'
 import { Connection } from "typeorm";
 import { UserRegisterRepository } from "../domain/UserRegisterRepository";
 
@@ -9,7 +10,21 @@ export class UserRegisterTypeormRepository implements UserRegisterRepository {
         this.connection = connection
     }
 
-    register(user: User): void {
-        throw new Error("Method not implemented.");
+    async register(user: User): Promise<void> {
+        const manager = this.connection.manager
+
+        const userEntity = new UserEntity(
+            user.id.value, 
+            user.name.value, 
+            user.birthday.value, 
+            user.gender.value, 
+            user.username.value, 
+            user.password.value, 
+            user.valid.value
+        )
+
+        await manager.save<UserEntity>(userEntity).catch(error => {
+            throw new Error(`UserRegisterTypeormRepository: Error -> ${error}`)
+        })
     }
 }
