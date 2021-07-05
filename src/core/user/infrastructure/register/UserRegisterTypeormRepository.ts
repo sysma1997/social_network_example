@@ -12,7 +12,7 @@ export class UserRegisterTypeormRepository implements UserRegisterRepository {
 
     async register(user: User): Promise<void> {
         const manager = this.connection.manager
-
+        
         const userEntity = new UserEntity(
             user.id.value, 
             user.name.value, 

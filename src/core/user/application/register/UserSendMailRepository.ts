@@ -1,6 +1,5 @@
-import { UserEmail } from "../../domain/UserEmail";
-import { UserId } from "../../domain/UserId";
+import { User } from "../../domain/User";
 
 export interface UserSendMailRepository {
-    sendMail(id: UserId, email: UserEmail): Promise<void>
+    sendMail(user: User): Promise<void>
 }

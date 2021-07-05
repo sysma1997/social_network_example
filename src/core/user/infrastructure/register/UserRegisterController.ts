@@ -4,16 +4,15 @@ import { UserDto } from "../../domain/UserDto";
 import { UserRegisterRepository } from "../../application/register/UserRegisterRepository";
 import { UserSendMailRepository } from "../../application/register/UserSendMailRepository";
 import { EmailValue } from "../../../shared/domain/EmailValue";
+import { Context } from "../../../shared/infrastructure/storage/Context";
+import { UserRegisterTypeormRepository } from "./UserRegisterTypeormRepository";
+import { UserSendMailNodemailerRepository } from "./UserSendMailNodemailerRepository";
 
 export class UserRegisterController {
     readonly router: Router
-    private register: RegisterUser
 
-    constructor(router: Router, 
-        repository: UserRegisterRepository, 
-        sendMailRepository: UserSendMailRepository) {
+    constructor(router: Router) {
         this.router = router
-        this.register = new RegisterUser(repository, sendMailRepository)
 
         this.init()
     }
@@ -85,7 +84,16 @@ export class UserRegisterController {
                 false
             )
 
-            await this.register.init(userDto)
+            const context = new Context()
+            const connection = await context.get()
+
+            const storageRepository: UserRegisterRepository = 
+                new UserRegisterTypeormRepository(connection)
+            const sendMailRepository: UserSendMailRepository = 
+                new UserSendMailNodemailerRepository()
+            const register = new RegisterUser(storageRepository, sendMailRepository)
+
+            await register.init(userDto)
             res.sendStatus(201)
         })
     }
