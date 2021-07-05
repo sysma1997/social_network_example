@@ -34,6 +34,6 @@ export class RegisterUser {
         )
 
         await this.repository.register(user)
-        this.sendMailRepository.sendMail(user.id, user.email)
+        this.sendMailRepository.sendMail(user)
     }
 }

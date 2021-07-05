@@ -1,9 +1,8 @@
 import { createTransport, Transporter } from "nodemailer";
 import { UserSendMailRepository } from "../../application/register/UserSendMailRepository";
-import { UserId } from "../../domain/UserId";
+import { User } from "../../domain/User";
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
-import { UserEmail } from "../../domain/UserEmail";
 
 export class UserSendMailNodemailerRepository implements UserSendMailRepository {
     private account: any
@@ -21,20 +20,33 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
         })
     }
     
-    async sendMail(id: UserId, email: UserEmail): Promise<void> {
+    private getHtmlMail(name: string, 
+        link: string): string {
+        let html = fs.readFileSync("./assets/mail.html").toString()
+        
+        html = html.replace("${name}", name)
+        html = html.replace("${link}", link)
+
+        return html
+    }
+
+    async sendMail(user: User): Promise<void> {
         const key = fs.readFileSync("./private.key").toString()
         const token = jwt.sign({
-            id: id.value, 
-            email: email.value
+            id: user.id.value, 
+            email: user.email.value
         }, key, {
             expiresIn: '1d'
         })
 
+        const html = this.getHtmlMail(user.name.value, 
+            `http://localhost:3000/api/user/validate/${token}`)
+
         await this.transporter.sendMail({
             from: `"${this.account.name}" <${this.account.user}>`, 
-            to: email.value, 
-            subject: "Welcome to 'sysma_social_network_example_api'", 
-            html: `<h4>${token}</h4>`
+            to: user.email.value, 
+            subject: "Welcome to SYSMA SOCIAL NETWORK", 
+            html: html
         })
     }
 }
