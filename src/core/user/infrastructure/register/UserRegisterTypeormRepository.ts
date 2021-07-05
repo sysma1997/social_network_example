@@ -1,7 +1,7 @@
-import { User } from "../domain/User";
-import { User as UserEntity } from '../../shared/infrastructure/storage/entities/User'
+import { User } from "../../domain/User";
+import { User as UserEntity } from '../../../shared/infrastructure/storage/entities/User'
 import { Connection } from "typeorm";
-import { UserRegisterRepository } from "../domain/UserRegisterRepository";
+import { UserRegisterRepository } from "../../application/register/UserRegisterRepository"
 
 export class UserRegisterTypeormRepository implements UserRegisterRepository {
     private connection: Connection
@@ -18,11 +18,13 @@ export class UserRegisterTypeormRepository implements UserRegisterRepository {
             user.name.value, 
             user.birthday.value, 
             user.gender.value, 
+            user.email.value, 
             user.username.value, 
             user.password.value, 
             user.valid.value
         )
 
         await manager.save<UserEntity>(userEntity)
+        await this.connection.close()
     }
 }

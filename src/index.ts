@@ -1,7 +1,8 @@
 import express from 'express'
 import { Context } from './core/shared/infrastructure/storage/Context'
-import { UserRegisterController } from './core/user/infrastructure/UserRegisterController'
-import { UserRegisterTypeormRepository } from './core/user/infrastructure/UserRegisterTypeormRepository'
+import { UserRegisterController } from './core/user/infrastructure/register/UserRegisterController'
+import { UserRegisterTypeormRepository } from './core/user/infrastructure/register/UserRegisterTypeormRepository'
+import { UserSendMailNodemailerRepository } from './core/user/infrastructure/register/UserSendMailNodemailerRepository'
 
 const app = express()
 const context = new Context()
@@ -11,8 +12,9 @@ app.use(express.urlencoded({ extended: false }))
 
 context.get().then(connection => {
     const userRegisterRepository = new UserRegisterTypeormRepository(connection)
+    const userSendMailRepository = new UserSendMailNodemailerRepository()
     const userRegisterController = new UserRegisterController(
-        express.Router(), userRegisterRepository)
+        express.Router(), userRegisterRepository, userSendMailRepository)
 
     app.use("/api/user", userRegisterController.router)
 })

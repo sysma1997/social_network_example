@@ -16,6 +16,8 @@ export class User {
     @Column()
     readonly gender: boolean
     @Column()
+    readonly email: string
+    @Column()
     readonly username: string
     @Column()
     readonly password: string
@@ -34,6 +36,7 @@ export class User {
         name: string,
         birthday: Date,
         gender: boolean,
+        email: string, 
         username: string,
         password: string,
         valid: boolean) {
@@ -41,6 +44,7 @@ export class User {
         this.name = name
         this.birthday = birthday
         this.gender = gender
+        this.email = email
         this.username = username
         this.password = password
         this.valid = valid

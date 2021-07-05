@@ -1,4 +1,5 @@
 import { UserBirthday } from "./UserBirthday";
+import { UserEmail } from "./UserEmail";
 import { UserGender } from "./UserGender";
 import { UserId } from "./UserId";
 import { UserName } from "./UserName";
@@ -12,6 +13,7 @@ export class User {
     readonly name: UserName
     readonly birthday: UserBirthday
     readonly gender: UserGender
+    readonly email: UserEmail
     readonly username: UserUsername
     readonly password: UserPassword
     readonly valid: UserValid
@@ -20,6 +22,7 @@ export class User {
         name: UserName,
         birthday: UserBirthday,
         gender: UserGender,
+        email: UserEmail, 
         username: UserUsername,
         password: UserPassword,
         valid: UserValid) {
@@ -27,6 +30,7 @@ export class User {
         this.name = name
         this.birthday = birthday
         this.gender = gender
+        this.email = email
         this.username = username
         this.password = password
         this.valid = valid

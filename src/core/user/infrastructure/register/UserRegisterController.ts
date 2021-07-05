@@ -1,16 +1,19 @@
 import { Router } from "express";
-import { RegisterUser } from "../application/register/RegisterUser";
-import { UserDto } from "../domain/UserDto";
-import { UserRegisterRepository } from "../domain/UserRegisterRepository";
+import { RegisterUser } from "../../application/register/RegisterUser";
+import { UserDto } from "../../domain/UserDto";
+import { UserRegisterRepository } from "../../application/register/UserRegisterRepository";
+import { UserSendMailRepository } from "../../application/register/UserSendMailRepository";
+import { EmailValue } from "../../../shared/domain/EmailValue";
 
 export class UserRegisterController {
     readonly router: Router
     private register: RegisterUser
 
     constructor(router: Router, 
-        repository: UserRegisterRepository) {
+        repository: UserRegisterRepository, 
+        sendMailRepository: UserSendMailRepository) {
         this.router = router
-        this.register = new RegisterUser(repository)
+        this.register = new RegisterUser(repository, sendMailRepository)
 
         this.init()
     }
@@ -23,6 +26,7 @@ export class UserRegisterController {
                 (!body.name || typeof(body.name) !== "string") || 
                 (!body.birthday || typeof(body.birthday) !== "string") || 
                 typeof(body.gender) !== "boolean" || 
+                (!body.email || typeof(body.email) !== "string") || 
                 (!body.username || typeof(body.username) !== "string") || 
                 (!body.password || typeof(body.password) !== "string")) {
                 let message = ""
@@ -41,6 +45,10 @@ export class UserRegisterController {
                     message += "Birthday not is string.\n"
                 if(typeof(body.gender) !== "boolean")
                     message += "Gender not is boolean.\n"
+                if(!body.email) 
+                    message += "Email is required.\n"
+                else if(typeof(body.email) !== "string")
+                    message += "Email not is string.\n"
                 if(!body.username) 
                     message += "Username is required.\n"
                 else if(typeof(body.username) !== "string")
@@ -53,11 +61,16 @@ export class UserRegisterController {
                 res.status(400).send(message)
                 return
             }
+            if(!EmailValue.Validate(body.email)) {
+                res.status(400).send(`'${body.email}' not is email valid.`)
+                return
+            }
 
             const id: string = body.id
             const name: string = body.name
             const birthday: Date = new Date(body.birthday)
             const gender: boolean = body.gender
+            const email: string = body.email
             const username: string = body.username
             const password: string = body.password
 
@@ -66,6 +79,7 @@ export class UserRegisterController {
                 name, 
                 birthday, 
                 gender, 
+                email, 
                 username, 
                 password, 
                 false

@@ -4,6 +4,7 @@ export class UserDto {
     readonly name: string
     readonly birthday: Date
     readonly gender: boolean
+    readonly email: string
     readonly username: string
     readonly password: string
     readonly valid: boolean
@@ -12,6 +13,7 @@ export class UserDto {
         name: string,
         birthday: Date,
         gender: boolean,
+        email: string, 
         username: string,
         password: string,
         valid: boolean) {
@@ -19,6 +21,7 @@ export class UserDto {
         this.name = name
         this.birthday = birthday
         this.gender = gender
+        this.email = email
         this.username = username
         this.password = password
         this.valid = valid

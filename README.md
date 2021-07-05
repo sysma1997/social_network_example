@@ -4,11 +4,27 @@ simple construction of a social network
 
 ## use:
 
-npm:
+Gmail: [Less secure app access](https://www.google.com/settings/security/lesssecureapps) change to 'Yes'
+
+Create gmail configuration file  `account.json`:
+```json
+{
+    "name": "<your_name>", 
+    "user": "<your_email>",
+    "pass": "<your_pass>"
+}
 ```
-npm start
+Create private key file `private.key`
 ```
-yarn:
+<any_text>
+```
+
+Install dependencies:
+```
+yarn install
+```
+
+Start api:
 ```
 yarn start
 ```
