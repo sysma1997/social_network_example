@@ -24,7 +24,35 @@ export class UserRegisterTypeormRepository implements UserRegisterRepository {
             user.valid.value
         )
 
+        const exists = await manager.getRepository(UserEntity)
+            .createQueryBuilder()
+            .where("email = :email", {
+                email: user.email.value
+            })
+            .getOne()
+        if(exists != null) {
+            if(!exists.valid) {
+                await manager.getRepository(UserEntity)
+                    .createQueryBuilder()
+                    .delete()
+                    .from(UserEntity)
+                    .where("id = :id", {
+                        id: exists.id
+                    })
+                    .execute()
+            }
+            else {
+                await this.connection.close()
+                throw new Error("Email already registered previously.")
+            }
+        }
+
         await manager.save<UserEntity>(userEntity)
+            .catch(async error => {
+                await this.connection.close()
+                throw new Error(error)
+            })
+
         await this.connection.close()
     }
 }

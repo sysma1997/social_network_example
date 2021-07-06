@@ -87,13 +87,17 @@ export class UserRegisterController {
             const context = new Context()
             const connection = await context.get()
 
-            const storageRepository: UserRegisterRepository = 
-                new UserRegisterTypeormRepository(connection)
-            const sendMailRepository: UserSendMailRepository = 
-                new UserSendMailNodemailerRepository()
+            const storageRepository = new UserRegisterTypeormRepository(connection)
+            const sendMailRepository = new UserSendMailNodemailerRepository()
             const register = new RegisterUser(storageRepository, sendMailRepository)
 
-            await register.init(userDto)
+            try {
+                await register.init(userDto)
+            } catch(error: any) {
+                res.status(400).send(error.toString())
+                return
+            }
+
             res.sendStatus(201)
         })
     }

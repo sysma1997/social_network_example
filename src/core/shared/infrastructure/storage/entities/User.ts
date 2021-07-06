@@ -15,7 +15,9 @@ export class User {
     readonly birthday: Date
     @Column()
     readonly gender: boolean
-    @Column()
+    @Column({
+        unique: true
+    })
     readonly email: string
     @Column()
     readonly username: string

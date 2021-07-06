@@ -33,7 +33,7 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
     async sendMail(user: User): Promise<void> {
         const key = fs.readFileSync("./private.key").toString()
         const token = jwt.sign({
-            id: user.id.value, 
+            id: user.id.value,
             email: user.email.value
         }, key, {
             expiresIn: '1d'
