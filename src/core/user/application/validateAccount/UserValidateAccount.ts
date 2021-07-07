@@ -9,7 +9,10 @@ export class UserValidateAccount {
         this.repository = repository
     }
 
-    async init(id: UserId, email: UserEmail): Promise<void> {
-        this.repository.validate(id, email)
+    async init(id: string, email: string): Promise<void> {
+        const userId = new UserId(id)
+        const userEmail = new UserEmail(email)
+
+        this.repository.validate(userId, userEmail)
     }
 }

@@ -27,8 +27,8 @@ export class UserValidateAccountController {
                     return
                 }
 
-                const id = new UserId((<any>decoded).id)
-                const email = new UserEmail((<any>decoded).email)
+                const id: string = (<any>decoded).id
+                const email: string = (<any>decoded).email
 
                 const context = new Context()
                 const connection = await context.get()
