@@ -1,6 +1,5 @@
 import { Connection } from "typeorm";
 import { UserValidateAccountRepository } from "../../application/validateAccount/UserValidateAccountRepository";
-import { User } from "../../domain/User";
 import { User as UserEntity } from "../../../shared/infrastructure/storage/entities/User"
 import { UserEmail } from "../../domain/UserEmail";
 import { UserId } from "../../domain/UserId";
@@ -21,7 +20,7 @@ export class UserValidateAccountTypeormRepository implements UserValidateAccount
             .set({
                 valid: true
             })
-            .where("user.id = :id AND user.email = :email", {
+            .where("id = :id AND email = :email", {
                 id: id.value, 
                 email: email.value
             })

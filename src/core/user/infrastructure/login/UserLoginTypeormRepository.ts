@@ -30,11 +30,11 @@ export class UserLoginTypeormRepository implements UserLoginRepository {
             throw new Error("Username or password invalid.")
         }
 
-        const key = fs.readFileSync('./private.key').toString()
+        const key = fs.readFileSync("./private.key").toString()
         const token = jwt.sign({
             id: user.id
         }, key, {
-            expiresIn: '5d'
+            expiresIn: "5d"
         })
 
         this.connection.close()

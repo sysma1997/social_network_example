@@ -4,8 +4,6 @@ import fs from 'fs'
 import { Context } from "../../../shared/infrastructure/storage/Context";
 import { UserValidateAccountTypeormRepository } from "./UserValidateAccountTypeormRepository";
 import { UserValidateAccount } from "../../application/validateAccount/UserValidateAccount";
-import { UserId } from "../../domain/UserId";
-import { UserEmail } from "../../domain/UserEmail";
 
 export class UserValidateAccountController {
     readonly router: Router

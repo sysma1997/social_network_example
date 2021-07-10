@@ -2,7 +2,7 @@
 
 simple construction of a social network
 
-## use:
+## Instructions:
 
 Gmail: [Less secure app access](https://www.google.com/settings/security/lesssecureapps) change to 'Yes'
 

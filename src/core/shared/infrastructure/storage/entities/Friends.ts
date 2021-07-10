@@ -15,6 +15,8 @@ export class Friend {
         type: 'uuid'
     })
     readonly friendId: string
+    @Column()
+    readonly request: boolean
 
     @ManyToOne(() => User, user => user.usersFriends)
     user: User | undefined
@@ -23,9 +25,11 @@ export class Friend {
 
     constructor(id: string,
         userId: string,
-        friendId: string) {
+        friendId: string, 
+        request: boolean) {
         this.id = id
         this.userId = userId
         this.friendId = friendId
+        this.request = request
     }
 }
