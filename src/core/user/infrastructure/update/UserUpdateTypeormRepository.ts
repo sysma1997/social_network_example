@@ -30,14 +30,13 @@ export class UserUpdateTypeormRepository implements UserUpdateRepository {
                 gender: gender.value, 
                 username: username.value
             })
-            .where("id = :id", {
+            .where("id = :id AND " + 
+                "valid = 1", {
                 id: id.value
             })
             .execute()
             .catch(async error => {
-                await this.connection.close()
                 throw new Error(error)
             })
-        await this.connection.close()
     }
 }

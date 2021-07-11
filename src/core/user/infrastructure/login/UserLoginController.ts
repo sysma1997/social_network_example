@@ -2,6 +2,7 @@ import { Router } from "express";
 import { Context } from "../../../shared/infrastructure/storage/Context";
 import { Login } from "../../application/login/Login";
 import { UserLoginTypeormRepository } from "./UserLoginTypeormRepository";
+import sha256 from "crypto-js/sha256"
 
 export class UserLoginController {
     readonly router: Router
@@ -41,12 +42,14 @@ export class UserLoginController {
 
             let token = ""
             try {
-                token = await login.init(username, password)
+                token = await login.init(username, sha256(password).toString())
             } catch(error: any) {
+                connection.close()
                 res.status(400).send(error.toString())
                 return
             }
 
+            connection.close()
             res.send(token)
         })
     }

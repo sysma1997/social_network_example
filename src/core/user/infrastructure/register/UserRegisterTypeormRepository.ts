@@ -42,17 +42,13 @@ export class UserRegisterTypeormRepository implements UserRegisterRepository {
                     .execute()
             }
             else {
-                await this.connection.close()
                 throw new Error("Email already registered previously.")
             }
         }
 
         await manager.save<UserEntity>(userEntity)
             .catch(async error => {
-                await this.connection.close()
                 throw new Error(error)
             })
-
-        await this.connection.close()
     }
 }

@@ -37,10 +37,12 @@ export class UserValidateAccountController {
                 try {
                     await validateAccount.init(id, email)
                 } catch(error: any) {
+                    connection.close()
                     res.status(400).send(error.toString())
                     return
                 }
                 
+                connection.close()
                 res.sendStatus(200)
             })
         })

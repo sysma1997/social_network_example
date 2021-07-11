@@ -26,7 +26,6 @@ export class UserLoginTypeormRepository implements UserLoginRepository {
             })
             .getOne()
         if(user == null) {
-            this.connection.close()
             throw new Error("Username or password invalid.")
         }
 
@@ -37,7 +36,6 @@ export class UserLoginTypeormRepository implements UserLoginRepository {
             expiresIn: "5d"
         })
 
-        this.connection.close()
         return token
     }
 }

@@ -20,9 +20,9 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
         })
     }
     
-    private getHtmlMail(name: string, 
+    private getHtml(name: string, 
         link: string): string {
-        let html = fs.readFileSync("./assets/mail.html").toString()
+        let html = fs.readFileSync("./assets/emails/register.html").toString()
         
         html = html.replace("${name}", name)
         html = html.replace("${link}", link)
@@ -36,10 +36,10 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
             id: user.id.value,
             email: user.email.value
         }, key, {
-            expiresIn: '1d'
+            expiresIn: "1d"
         })
 
-        const html = this.getHtmlMail(user.name.value, 
+        const html = this.getHtml(user.name.value, 
             `http://localhost:3000/api/user/validate/${token}`)
 
         await this.transporter.sendMail({
@@ -47,6 +47,8 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
             to: user.email.value, 
             subject: "SYSMA SOCIAL NETWORK", 
             html: html
+        }).catch(error => {
+            throw new Error(error)
         })
     }
 }

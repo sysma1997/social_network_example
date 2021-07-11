@@ -1,26 +1,31 @@
 import { Connection } from "typeorm";
-import { UserValidateAccountRepository } from "../../application/validateAccount/UserValidateAccountRepository";
+import { UserUpdateNewPasswordRepository } from "../../application/passwordRecovery/UserUpdateNewPasswordRepository";
 import { User as UserEntity } from "../../../shared/infrastructure/storage/entities/User"
 import { UserEmail } from "../../domain/UserEmail";
 import { UserId } from "../../domain/UserId";
+import { UserPassword } from "../../domain/UserPassword";
 
-export class UserValidateAccountTypeormRepository implements UserValidateAccountRepository {
+export class UserUpdateNewPasswordTypeormRepository implements UserUpdateNewPasswordRepository {
     private connection: Connection
 
     constructor(connection: Connection) {
         this.connection = connection
     }
-
-    async validate(id: UserId, email: UserEmail): Promise<void> {
+    
+    async updateNewPassword(password: UserPassword, 
+        id: UserId, 
+        email: UserEmail): Promise<void> {
         const manager = this.connection.manager
 
         await manager.getRepository(UserEntity)
             .createQueryBuilder()
             .update(UserEntity)
             .set({
-                valid: true
+                password: password.value
             })
-            .where("id = :id AND email = :email", {
+            .where("id = :id AND " + 
+                "email = :email AND " + 
+                "valid = 1", {
                 id: id.value, 
                 email: email.value
             })
@@ -28,5 +33,5 @@ export class UserValidateAccountTypeormRepository implements UserValidateAccount
             .catch(async error => {
                 throw new Error(error)
             })
-    }    
+    }
 }

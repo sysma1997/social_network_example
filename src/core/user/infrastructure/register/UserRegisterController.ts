@@ -5,6 +5,7 @@ import { EmailValue } from "../../../shared/domain/EmailValue";
 import { Context } from "../../../shared/infrastructure/storage/Context";
 import { UserRegisterTypeormRepository } from "./UserRegisterTypeormRepository";
 import { UserSendMailNodemailerRepository } from "./UserSendMailNodemailerRepository";
+import sha256 from "crypto-js/sha256"
 
 export class UserRegisterController {
     readonly router: Router
@@ -58,10 +59,6 @@ export class UserRegisterController {
                 res.status(400).send(message)
                 return
             }
-            if(!EmailValue.Validate(body.email)) {
-                res.status(400).send(`'${body.email}' not is email valid.`)
-                return
-            }
 
             const id: string = body.id
             const name: string = body.name
@@ -69,7 +66,7 @@ export class UserRegisterController {
             const gender: boolean = body.gender
             const email: string = body.email
             const username: string = body.username
-            const password: string = body.password
+            const password: string = sha256(body.password).toString()
 
             const userDto = new UserDto(
                 id, 
@@ -92,10 +89,12 @@ export class UserRegisterController {
             try {
                 await register.init(userDto)
             } catch(error: any) {
+                connection.close()
                 res.status(400).send(error.toString())
                 return
             }
 
+            connection.close()
             res.sendStatus(201)
         })
     }

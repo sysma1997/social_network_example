@@ -5,6 +5,8 @@
   "author": "Sebastian Moreno Acero",
   "license": "MIT",
   "dependencies": {
+    "@types/crypto-js": "^4.0.2",
+    "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.6.2",
