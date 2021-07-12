@@ -1,8 +1,9 @@
 import { createTransport, Transporter } from "nodemailer";
 import { UserSendMailRepository } from "../../application/register/UserSendMailRepository";
 import { User } from "../../domain/User";
-import fs from 'fs'
-import jwt from 'jsonwebtoken'
+import fs from "fs"
+import jwt from "jsonwebtoken"
+import { MailHtml } from "../../../shared/infrastructure/email/MailHtml"
 
 export class UserSendMailNodemailerRepository implements UserSendMailRepository {
     private account: any
@@ -19,16 +20,6 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
             }
         })
     }
-    
-    private getHtml(name: string, 
-        link: string): string {
-        let html = fs.readFileSync("./assets/emails/register.html").toString()
-        
-        html = html.replace("${name}", name)
-        html = html.replace("${link}", link)
-
-        return html
-    }
 
     async sendMail(user: User): Promise<void> {
         const key = fs.readFileSync("./private.key").toString()
@@ -39,7 +30,8 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
             expiresIn: "1d"
         })
 
-        const html = this.getHtml(user.name.value, 
+        const html = MailHtml("register", 
+            user.name.value, 
             `http://localhost:3000/api/user/validate/${token}`)
 
         await this.transporter.sendMail({
