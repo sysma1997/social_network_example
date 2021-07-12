@@ -1,13 +1,14 @@
 import { createTransport, Transporter } from "nodemailer";
-import { UserPasswordRecoveryRepository } from "../../application/passwordRecovery/UserPasswordRecoveryRepository";
-import { UserEmail } from "../../domain/UserEmail";
+import { Connection } from "typeorm";
+import { UserUpdateEmailRequestRepository } from "../../application/updateEmail/UserUpdateEmailRequestRepository";
 import { User as UserEntity } from "../../../shared/infrastructure/storage/entities/User"
+import { UserEmail } from "../../domain/UserEmail";
+import { UserId } from "../../domain/UserId";
 import fs from "fs"
 import jwt from "jsonwebtoken"
-import { Connection } from "typeorm";
 import { MailHtml } from "../../../shared/infrastructure/email/MailHtml";
 
-export class UserPasswordRecoveryNodemailerRepository implements UserPasswordRecoveryRepository {
+export class UserUpdateEmailRequestNodemailerRepository implements UserUpdateEmailRequestRepository {
     private connection: Connection
     private account: any
     private transporter: Transporter
@@ -20,42 +21,42 @@ export class UserPasswordRecoveryNodemailerRepository implements UserPasswordRec
         this.transporter = createTransport({
             service: "Gmail", 
             auth: {
-                user: this.account.user,
+                user: this.account.user, 
                 pass: this.account.pass
             }
         })
     }
 
-    async passwordRecovery(email: UserEmail): Promise<void> {
-        const manager = this.connection.manager
+    async updateEmailRequest(id: UserId, newEmail: UserEmail): Promise<void> {
+        const manager = await this.connection.manager
 
         const user = await manager.getRepository(UserEntity)
             .createQueryBuilder()
-            .where("email = :email AND " + 
+            .where("id = :id AND " + 
                 "valid = 1", {
-                email: email.value
+                id: id.value
             })
             .getOne()
         if(user == null) {
-            throw new Error("Email not registered.")
+            throw new Error("User not found.")
         }
 
         const key = fs.readFileSync("./private.key").toString()
         const token = jwt.sign({
             id: user.id, 
-            email: user.email
+            newEmail: newEmail.value
         }, key, {
             expiresIn: "1d"
         })
 
-        const html = MailHtml("recoverPassword", 
+        const html = MailHtml("updateEmail", 
             user.name, 
-            `http://localhost:3000/${token}/`)
-
+            `http://localhost:3000/api/user/updateemail/${token}`)
+        
         await this.transporter.sendMail({
-            from: `"${this.account.name}" <${this.account.user}>`, 
-            to: user.email, 
-            subject: "Password recovery", 
+            from: `"${this.account.name}" <${this.account.user}>`,
+            to: newEmail.value, 
+            subject: "Update email", 
             html: html
         })
     }
