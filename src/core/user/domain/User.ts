@@ -1,4 +1,5 @@
 import { UserBirthday } from "./UserBirthday";
+import { UserDto } from "./UserDto";
 import { UserEmail } from "./UserEmail";
 import { UserGender } from "./UserGender";
 import { UserId } from "./UserId";
@@ -34,5 +35,18 @@ export class User {
         this.username = username
         this.password = password
         this.valid = valid
+    }
+
+    toDto(): UserDto {
+        return new UserDto(
+            this.id.value, 
+            this.name.value, 
+            this.birthday.value, 
+            this.gender.value, 
+            this.email.value, 
+            this.username.value, 
+            this.password.value, 
+            this.valid.value
+        )
     }
 }

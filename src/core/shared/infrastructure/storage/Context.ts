@@ -7,7 +7,8 @@ export class Context {
             type: 'sqlite',
             database: `${__dirname}\\database.db`,
             entities: [`${__dirname}\\entities\\*.ts`],
-            synchronize: true
+            synchronize: true, 
+            logging: "all"
         })
     }
 }

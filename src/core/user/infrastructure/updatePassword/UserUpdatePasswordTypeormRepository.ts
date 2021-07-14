@@ -1,28 +1,32 @@
 import { Connection } from "typeorm";
-import { UserUpdateEmailRepository } from "../../application/updateEmail/UserUpdateEmailRepository";
+import { UserUpdatePasswordRepository } from "../../application/updatePassword/UserUpdatePasswordRepository";
 import { User as UserEntity } from "../../../shared/infrastructure/storage/entities/User"
-import { UserEmail } from "../../domain/UserEmail";
 import { UserId } from "../../domain/UserId";
+import { UserPassword } from "../../domain/UserPassword";
 
-export class UserUpdateEmailTypeormRepository implements UserUpdateEmailRepository {
+export class UserUpdatePasswordTypeormRepository implements UserUpdatePasswordRepository {
     private connection: Connection
 
     constructor(connection: Connection) {
         this.connection = connection
     }
-    
-    async updateEmail(id: UserId, newEmail: UserEmail): Promise<void> {
+
+    async updatePassword(id: UserId, 
+        currentPassword: UserPassword, 
+        newPassword: UserPassword): Promise<void> {
         const manager = this.connection.manager
 
         await manager.getRepository(UserEntity)
             .createQueryBuilder()
             .update(UserEntity)
             .set({
-                email: newEmail.value
+                password: newPassword.value
             })
             .where("id = :id AND " + 
+                "password = :password AND " + 
                 "valid = 1", {
-                id: id.value
+                id: id.value, 
+                password: currentPassword.value
             })
             .execute()
             .catch(error => {

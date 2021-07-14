@@ -25,8 +25,8 @@ export class UserUpdateEmailController {
                     return
                 }
 
-                const newEmail = (<any>decode).newEmail
                 const id = (<any>decode).id
+                const newEmail = (<any>decode).newEmail
 
                 const context = new Context()
                 const connection = await context.get()
@@ -35,7 +35,7 @@ export class UserUpdateEmailController {
                 const updateEmail = new UpdateEmail(repository)
 
                 try {
-                    await updateEmail.init(newEmail, id)
+                    await updateEmail.init(id, newEmail)
                 } catch (error: any) {
                     connection.close()
                     res.status(400).send(error.toString())

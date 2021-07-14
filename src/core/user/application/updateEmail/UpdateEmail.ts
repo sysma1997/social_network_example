@@ -9,10 +9,10 @@ export class UpdateEmail {
         this.repository = repository
     }
 
-    async init(newEmail: string, id: string): Promise<void> {
+    async init(id: string, newEmail: string): Promise<void> {
         await this.repository.updateEmail(
-            new UserEmail(newEmail), 
-            new UserId(id)
+            new UserId(id), 
+            new UserEmail(newEmail)
         )
     }
 }
