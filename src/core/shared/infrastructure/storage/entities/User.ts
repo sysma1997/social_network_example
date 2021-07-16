@@ -25,6 +25,10 @@ export class User {
     readonly password: string
     @Column()
     readonly valid: boolean
+    @Column({
+        nullable: true
+    })
+    readonly image?: string
 
     @OneToMany(() => Friend, friend => friend.user)
     usersFriends: Friend[] | undefined
@@ -41,7 +45,8 @@ export class User {
         email: string, 
         username: string,
         password: string,
-        valid: boolean) {
+        valid: boolean, 
+        image?: string) {
         this.id = id
         this.name = name
         this.birthday = birthday
@@ -50,5 +55,6 @@ export class User {
         this.username = username
         this.password = password
         this.valid = valid
+        this.image = image
     }
 }

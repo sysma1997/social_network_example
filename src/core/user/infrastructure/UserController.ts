@@ -9,6 +9,7 @@ import { UserRegisterController } from './register/UserRegisterController'
 import { UserUpdateController } from './update/UserUpdateController'
 import { UserUpdateEmailController } from './updateEmail/UserUpdateEmailController'
 import { UserUpdateEmailRequestController } from './updateEmail/UserUpdateEmailRequestController'
+import { UserUpdateImageController } from './updateImage/UserUpdateImageController'
 import { UserUpdatePasswordController } from './updatePassword/UserUpdatePasswordController'
 import { UserValidateAccountController } from './validateAccount/UserValidateAccountController'
 
@@ -28,5 +29,6 @@ new UserUpdateEmailRequestController(router)
 new UserUpdatePasswordController(router)
 new UserGetController(router)
 new UserFindController(router)
+new UserUpdateImageController(router)
 
 export default router

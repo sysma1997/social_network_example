@@ -10,6 +10,7 @@ import { UserEmail } from "../../domain/UserEmail";
 import { UserUsername } from "../../domain/UserUsername";
 import { UserPassword } from "../../domain/UserPassword";
 import { UserValid } from "../../domain/UserValid";
+import { UserImage } from "../../domain/UserImage";
 
 export class UserGetTypeormRepository implements UserGetRepository {
     private connection: Connection
@@ -44,7 +45,8 @@ export class UserGetTypeormRepository implements UserGetRepository {
             new UserEmail(userEntity.email), 
             new UserUsername(userEntity.username), 
             new UserPassword(userEntity.password), 
-            new UserValid(userEntity.valid)
+            new UserValid(userEntity.valid), 
+            new UserImage(userEntity.image)
         )
     }
 }

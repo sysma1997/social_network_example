@@ -3,3 +3,4 @@ build/
 src/core/shared/infrastructure/storage/database.db
 account.json
 private.key
+public/

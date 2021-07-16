@@ -10,6 +10,7 @@ import { UserEmail } from "../../domain/UserEmail";
 import { UserUsername } from "../../domain/UserUsername";
 import { UserPassword } from "../../domain/UserPassword";
 import { UserValid } from "../../domain/UserValid";
+import { UserImage } from "../../domain/UserImage";
 
 export class UserFindTypeormRepository implements UserFindRepository {
     private connection: Connection
@@ -41,7 +42,8 @@ export class UserFindTypeormRepository implements UserFindRepository {
                 new UserEmail(user.email), 
                 new UserUsername(user.username), 
                 new UserPassword(user.password), 
-                new UserValid(user.valid)
+                new UserValid(user.valid), 
+                new UserImage(user.image)
             ))
     }
 }

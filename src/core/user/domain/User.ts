@@ -3,6 +3,7 @@ import { UserDto } from "./UserDto";
 import { UserEmail } from "./UserEmail";
 import { UserGender } from "./UserGender";
 import { UserId } from "./UserId";
+import { UserImage } from "./UserImage";
 import { UserName } from "./UserName";
 import { UserPassword } from "./UserPassword";
 import { UserUsername } from "./UserUsername";
@@ -18,6 +19,7 @@ export class User {
     readonly username: UserUsername
     readonly password: UserPassword
     readonly valid: UserValid
+    readonly image?: UserImage
 
     constructor(id: UserId,
         name: UserName,
@@ -26,7 +28,8 @@ export class User {
         email: UserEmail, 
         username: UserUsername,
         password: UserPassword,
-        valid: UserValid) {
+        valid: UserValid, 
+        image?: UserImage) {
         this.id = id
         this.name = name
         this.birthday = birthday
@@ -35,6 +38,7 @@ export class User {
         this.username = username
         this.password = password
         this.valid = valid
+        this.image = image
     }
 
     toDto(): UserDto {
@@ -46,7 +50,8 @@ export class User {
             this.email.value, 
             this.username.value, 
             this.password.value, 
-            this.valid.value
+            this.valid.value, 
+            this.image?.value
         )
     }
 }

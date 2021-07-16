@@ -6,8 +6,10 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+app.use(express.static("public"))
+
 app.get("/", (req, res) => {
-    res.send("success");
+    res.send("SYSMA Social Network API v1.0.0")
 })
 
 app.use("/api/user", UserController)

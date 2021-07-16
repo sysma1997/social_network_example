@@ -8,6 +8,7 @@ export class UserDto {
     readonly username: string
     readonly password: string
     readonly valid: boolean
+    readonly image?: string
 
     constructor(id: string,
         name: string,
@@ -16,7 +17,8 @@ export class UserDto {
         email: string, 
         username: string,
         password: string,
-        valid: boolean) {
+        valid: boolean, 
+        image?: string) {
         this.id = id
         this.name = name
         this.birthday = birthday
@@ -25,5 +27,6 @@ export class UserDto {
         this.username = username
         this.password = password
         this.valid = valid
+        this.image = image
     }
 }
