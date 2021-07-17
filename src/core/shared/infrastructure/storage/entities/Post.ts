@@ -18,23 +18,30 @@ export class Post {
         type: 'text'
     })
     readonly description: string
+    @Column()
+    readonly date: Date
     @Column({
         nullable: true
     })
     readonly image?: string
 
     @ManyToOne(() => User, user => user.posts)
-    user: User | undefined
+    readonly user?: User
 
     constructor(id: string,
         userId: string,
         title: string,
-        description: string,
-        image?: string) {
+        description: string, 
+        date: Date, 
+        image?: string, 
+        user?: User) {
         this.id = id
         this.userId = userId
         this.title = title
         this.description = description
+        this.date = date
         this.image = image
+        
+        this.user = user
     }
 }

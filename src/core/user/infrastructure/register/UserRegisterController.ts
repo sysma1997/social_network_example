@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { RegisterUser } from "../../application/register/RegisterUser";
 import { UserDto } from "../../domain/UserDto";
-import { EmailValue } from "../../../shared/domain/EmailValue";
 import { Context } from "../../../shared/infrastructure/storage/Context";
 import { UserRegisterTypeormRepository } from "./UserRegisterTypeormRepository";
 import { UserSendMailNodemailerRepository } from "./UserSendMailNodemailerRepository";

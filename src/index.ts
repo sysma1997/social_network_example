@@ -1,5 +1,6 @@
-import express from 'express'
-import UserController from './core/user/infrastructure/UserController'
+import express from "express"
+import UserController from "./core/user/infrastructure/UserController"
+import PostController from "./core/post/infrastructure/PostController"
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api/user", UserController)
+app.use("/api/post", PostController)
 
 app.listen(3000, () => {
     console.log("Listen in port: 3000")
