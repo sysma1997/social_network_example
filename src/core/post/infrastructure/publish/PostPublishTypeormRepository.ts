@@ -19,7 +19,7 @@ export class PostPublishTypeormRepository implements PostPublishRepository {
             post.title.value, 
             post.description.value, 
             post.date.value, 
-            post.image?.value
+            post.image.value
         )
 
         await manager.save<PostEntity>(postEntity)

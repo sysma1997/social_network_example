@@ -42,7 +42,7 @@ export class Post {
             this.title.value, 
             this.description.value, 
             this.date.value, 
-            this.image?.value, 
+            this.image.value, 
             this.user?.toDto()
         )
     }

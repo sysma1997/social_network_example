@@ -15,15 +15,16 @@ export class Post {
     @Column()
     readonly title: string
     @Column({
-        type: 'text'
+        type: "text"
     })
     readonly description: string
     @Column()
     readonly date: Date
     @Column({
+        type: "varchar", 
         nullable: true
     })
-    readonly image?: string
+    readonly image: string | null
 
     @ManyToOne(() => User, user => user.posts)
     readonly user?: User
@@ -33,7 +34,7 @@ export class Post {
         title: string,
         description: string, 
         date: Date, 
-        image?: string, 
+        image: string | null, 
         user?: User) {
         this.id = id
         this.userId = userId

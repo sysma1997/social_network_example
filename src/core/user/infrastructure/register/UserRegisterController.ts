@@ -75,7 +75,8 @@ export class UserRegisterController {
                 email, 
                 username, 
                 password, 
-                false
+                false, 
+                null
             )
 
             const context = new Context()

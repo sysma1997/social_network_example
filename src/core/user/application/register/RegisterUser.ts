@@ -10,6 +10,7 @@ import { UserUsername } from "../../domain/UserUsername";
 import { UserValid } from "../../domain/UserValid";
 import { UserSendMailRepository } from "./UserSendMailRepository";
 import { UserEmail } from "../../domain/UserEmail";
+import { UserImage } from "../../domain/UserImage";
 
 export class RegisterUser {
     private repository: UserRegisterRepository
@@ -30,7 +31,8 @@ export class RegisterUser {
             new UserEmail(userDto.email), 
             new UserUsername(userDto.username), 
             new UserPassword(userDto.password), 
-            new UserValid(userDto.valid)
+            new UserValid(userDto.valid), 
+            new UserImage(userDto.image)
         )
 
         await this.repository.register(user)

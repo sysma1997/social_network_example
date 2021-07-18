@@ -8,7 +8,7 @@ export class GetImage {
         this.repository = repository
     }
 
-    public async init(id: string): Promise<string | undefined> {
+    public async init(id: string): Promise<string | null> {
         return (await this.repository.getImage(
             new UserId(id)
         )).value

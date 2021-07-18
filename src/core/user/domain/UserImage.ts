@@ -1,3 +1,3 @@
-import { StringUndefinedValue } from "../../shared/domain/StringUndefinedValue";
+import { StringOrNullValue } from "../../shared/domain/StringUndefinedValue";
 
-export class UserImage extends StringUndefinedValue {}
+export class UserImage extends StringOrNullValue {}

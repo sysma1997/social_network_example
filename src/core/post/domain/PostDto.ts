@@ -7,7 +7,7 @@ export class PostDto {
     readonly title: string
     readonly description: string
     readonly date: Date
-    readonly image?: string
+    readonly image: string | null
 
     readonly user?: UserDto
 
@@ -16,7 +16,7 @@ export class PostDto {
         title: string, 
         description: string, 
         date: Date, 
-        image?: string, 
+        image: string | null, 
         user?: UserDto) {
         this.id = id
         this.userId = userId

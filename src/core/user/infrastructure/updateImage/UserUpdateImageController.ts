@@ -1,15 +1,11 @@
 import { Router } from "express";
-import multer from "multer"
 import fs from "fs"
 import { Context } from "../../../shared/infrastructure/storage/Context";
 import { UserUpdateImageTypeormRepository } from "./UserUpdateImageTypeormRepository";
 import { UpdateImage } from "../../application/updateImage/UpdateImage";
 import { UserGetImageTypeormRepository } from "./UserGetImageTypeormRepository";
 import { GetImage } from "../../application/updateImage/GetImage";
-
-const upload = multer({
-    storage: multer.memoryStorage()
-})
+import { UploadSingle } from "../../../shared/infrastructure/uploadFiles/UploadSingle";
 
 export class UserUpdateImageController {
     private router: Router
@@ -21,17 +17,17 @@ export class UserUpdateImageController {
     }
 
     private init() {
-        this.router.put("/updateimage", upload.single("image"), async (req, res) => {
-            const image = req.file
+        this.router.put("/updateimage", UploadSingle.single("image"), async (req, res) => {
+            const imageFile = req.file
 
-            if(!image) {
+            if(!imageFile) {
                 res.status(400).send("Image is required.")
                 return
             }
-            if (image.mimetype !== "image/jpg" && 
-                image.mimetype !== "image/jpeg" && 
-                image.mimetype !== "image/png" && 
-                image.mimetype !== "image/gif") {
+            if (imageFile.mimetype !== "image/jpg" && 
+                imageFile.mimetype !== "image/jpeg" && 
+                imageFile.mimetype !== "image/png" && 
+                imageFile.mimetype !== "image/gif") {
                 res.status(400).send("File is not imagen valid. " + 
                     "Only types valid (JPEG, PNG, GIF)")
                 return
@@ -43,18 +39,18 @@ export class UserUpdateImageController {
             const getImageRepository = new UserGetImageTypeormRepository(connection)
             const getImage = new GetImage(getImageRepository)
 
-            let imageProfile: string | undefined = ""
+            let image: string | null = null
             try {
-                imageProfile = await getImage.init(res.locals.userId)
+                image = await getImage.init(res.locals.userId)
             } catch(error: any) {
                 connection.close()
                 res.status(400).send(error.toString())
                 return
             }
 
-            if(imageProfile != null) {
+            if(image) {
                 try {
-                    fs.unlinkSync(`.${imageProfile}`)
+                    fs.unlinkSync(`.${image}`)
                 } catch(error: any) {
                     connection.close()
                     res.status(400).send(error.toString())
@@ -65,9 +61,9 @@ export class UserUpdateImageController {
             if(!fs.existsSync(`.${folder}`)) 
                 fs.mkdirSync(`.${folder}`, { recursive: true })
             
-            imageProfile = `${folder}/${image.originalname}`
+            image = `${folder}/${imageFile.originalname}`
             try {
-                fs.writeFileSync(`.${imageProfile}`, image.buffer/* , "ascii" */)
+                fs.writeFileSync(`.${image}`, imageFile.buffer)
             } catch(error: any) {
                 connection.close()
                 res.status(400).send(error.toString())
@@ -78,7 +74,7 @@ export class UserUpdateImageController {
             const updateImage = new UpdateImage(updateImageRepository)
 
             try {
-                await updateImage.init(res.locals.userId, imageProfile)
+                await updateImage.init(res.locals.userId, image)
             } catch(error: any) {
                 connection.close()
                 res.status(400).send(error.toString())

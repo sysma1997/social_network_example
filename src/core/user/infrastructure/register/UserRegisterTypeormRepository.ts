@@ -21,7 +21,8 @@ export class UserRegisterTypeormRepository implements UserRegisterRepository {
             user.email.value, 
             user.username.value, 
             user.password.value, 
-            user.valid.value
+            user.valid.value, 
+            user.image.value
         )
 
         const exists = await manager.getRepository(UserEntity)

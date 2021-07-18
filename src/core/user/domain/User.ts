@@ -19,7 +19,7 @@ export class User {
     readonly username: UserUsername
     readonly password: UserPassword
     readonly valid: UserValid
-    readonly image?: UserImage
+    readonly image: UserImage
 
     constructor(id: UserId,
         name: UserName,
@@ -29,7 +29,7 @@ export class User {
         username: UserUsername,
         password: UserPassword,
         valid: UserValid, 
-        image?: UserImage) {
+        image: UserImage) {
         this.id = id
         this.name = name
         this.birthday = birthday
@@ -51,7 +51,7 @@ export class User {
             this.username.value, 
             this.password.value, 
             this.valid.value, 
-            this.image?.value
+            this.image.value
         )
     }
 }

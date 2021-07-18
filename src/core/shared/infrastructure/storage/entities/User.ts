@@ -26,9 +26,10 @@ export class User {
     @Column()
     readonly valid: boolean
     @Column({
+        type: "varchar", 
         nullable: true
     })
-    readonly image?: string
+    readonly image: string | null
 
     @OneToMany(() => Friend, friend => friend.user)
     usersFriends: Friend[] | undefined
@@ -46,7 +47,7 @@ export class User {
         username: string,
         password: string,
         valid: boolean, 
-        image?: string) {
+        image: string | null) {
         this.id = id
         this.name = name
         this.birthday = birthday
