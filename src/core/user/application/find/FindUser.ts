@@ -14,8 +14,6 @@ export class FindUser {
         return (await this.repository.find(
             new UserId(id), 
             new UserName(name)
-        )).map(user => {
-            return user.toDto()
-        })
+        )).map(user => user.toDto())
     }
 }
