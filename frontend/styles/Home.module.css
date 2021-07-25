@@ -1,0 +1,91 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    align-items: center;
+
+    height: 100vh;
+}
+
+.presentation {
+    padding: 0rem;
+    margin: 0 10rem;
+    flex: 1.5;
+}
+.presentationTitle {
+    text-align: center;
+
+    color: white;
+    font-size: 3.4vw;
+    font-weight: bold;
+}
+.presentationDescription {
+    color: white;
+    font-size: 1.5vw;
+}
+
+.form {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(0.2rem);
+    border-radius: 0.4rem;
+    box-shadow: 0rem 0.5rem 1rem rgba(68, 68, 68, 0.4);
+
+    padding: 2rem;
+    margin: 0 12rem;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+.formInput {
+    font-size: 1vw;
+
+    border-radius: 0.4rem;
+    border: none;
+
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+}
+.formButtonLogin {
+    background: rgb(255, 184, 0);
+    color: white;
+
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+.formButtonLogin:hover {
+    background: rgb(255, 218, 0);
+    cursor: pointer;
+    /* ANIMACION AQUI */
+}
+.formButtonRegister {
+    background: rgb(219, 99, 0);
+    color: white;
+
+    margin-top: 1rem;
+}
+.formButtonRegister:hover {
+    background: rgb(255, 115, 0);
+    cursor: pointer;
+}
+.formForgetPassword {
+    color: white;
+    font-size: 1.1vw;
+    text-align: center;
+
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+.formForgetPassword:hover {
+    text-decoration: underline;
+}
+.formHr {
+    background: rgba(68, 68, 68, 0.5);
+    border: 1px solid rgba(68, 68, 68, 0.2);
+    
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
