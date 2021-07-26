@@ -1,6 +1,8 @@
 node_modules/
 build/
 src/core/shared/infrastructure/storage/database.db
+.env
 account.json
 private.key
 public/
+ormconfig.js

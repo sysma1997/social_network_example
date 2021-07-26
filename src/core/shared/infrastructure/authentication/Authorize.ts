@@ -37,7 +37,7 @@ export class Authorize {
                 return
             }
 
-            const key = fs.readFileSync("./private.key").toString()
+            const key = process.env.JSONWEBTOKEN_PRIVATE_KEY as string
             jwt.verify(auth.token, key, (error, decode) => {
                 if(error) {
                     res.status(401).send(error.message)

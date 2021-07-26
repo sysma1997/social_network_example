@@ -1,6 +1,5 @@
 import { Router } from "express";
 import jwt from 'jsonwebtoken'
-import fs from 'fs'
 import { Context } from "../../../shared/infrastructure/storage/Context";
 import { UserValidateAccountTypeormRepository } from "./UserValidateAccountTypeormRepository";
 import { UserValidateAccount } from "../../application/validateAccount/UserValidateAccount";
@@ -17,7 +16,7 @@ export class UserValidateAccountController {
     private init() {
         this.router.get("/validate/:token", async (req, res) => {
             const token = req.params.token
-            const key = fs.readFileSync("./private.key").toString()
+            const key = process.env.JSONWEBTOKEN_PRIVATE_KEY as string
             
             jwt.verify(token, key, async (error, decoded) => {
                 if(error) {

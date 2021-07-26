@@ -3,26 +3,23 @@ import { UserSendMailRepository } from "../../application/register/UserSendMailR
 import { User } from "../../domain/User";
 import fs from "fs"
 import jwt from "jsonwebtoken"
-import { MailHtml } from "../../../shared/infrastructure/email/MailHtml"
+import { MailHtml } from "../../../shared/infrastructure/mail/MailHtml"
 
 export class UserSendMailNodemailerRepository implements UserSendMailRepository {
-    private account: any
     private transporter: Transporter
 
     constructor() {
-        const stringAccount = fs.readFileSync("./account.json").toString()
-        this.account = JSON.parse(stringAccount)
         this.transporter = createTransport({
-            service: "Gmail", 
+            service: process.env.NODEMAILER_SERVICE, 
             auth: {
-                user: this.account.user, 
-                pass: this.account.pass
+                user: process.env.NODEMAILER_AUTH_USER, 
+                pass: process.env.NODEMAILER_AUTH_PASS
             }
         })
     }
 
     async sendMail(user: User): Promise<void> {
-        const key = fs.readFileSync("./private.key").toString()
+        const key = process.env.JSONWEBTOKEN_PRIVATE_KEY as string
         const token = jwt.sign({
             id: user.id.value,
             email: user.email.value
@@ -35,12 +32,14 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
             `http://localhost:3000/api/user/validate/${token}`)
 
         await this.transporter.sendMail({
-            from: `"${this.account.name}" <${this.account.user}>`, 
+            from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_AUTH_USER}>`, 
             to: user.email.value, 
             subject: "SYSMA SOCIAL NETWORK", 
             html: html
-        }).catch(error => {
-            throw new Error(error)
+        }, (error, _) => {
+            if(error) {
+                throw new Error(error.message)
+            }
         })
     }
 }

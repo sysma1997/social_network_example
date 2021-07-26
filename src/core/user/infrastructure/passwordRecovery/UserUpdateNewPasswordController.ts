@@ -1,5 +1,4 @@
 import { Router } from "express";
-import fs from "fs"
 import jwt from "jsonwebtoken";
 import sha256 from "crypto-js/sha256"
 import { Context } from "../../../shared/infrastructure/storage/Context";
@@ -36,7 +35,7 @@ export class UserUpdateNewPasswordController {
                 return
             }
 
-            const key = fs.readFileSync("./private.key").toString()
+            const key = process.env.JSONWEBTOKEN_PRIVATE_KEY as string
             jwt.verify(token, key, async (error, decode) => {
                 if(error) {
                     res.status(400).send(error.message)

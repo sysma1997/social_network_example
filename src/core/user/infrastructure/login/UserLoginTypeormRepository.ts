@@ -3,7 +3,6 @@ import { UserLoginRepository } from "../../application/login/UserLoginRepository
 import { UserPassword } from "../../domain/UserPassword";
 import { UserUsername } from "../../domain/UserUsername";
 import { User as UserEntity } from "../../../shared/infrastructure/storage/entities/User"
-import fs from 'fs'
 import jwt from 'jsonwebtoken'
 
 export class UserLoginTypeormRepository implements UserLoginRepository {
@@ -29,7 +28,7 @@ export class UserLoginTypeormRepository implements UserLoginRepository {
             throw new Error("Username or password invalid.")
         }
 
-        const key = fs.readFileSync("./private.key").toString()
+        const key = process.env.JSONWEBTOKEN_PRIVATE_KEY as string
         const token = jwt.sign({
             id: user.id
         }, key, {

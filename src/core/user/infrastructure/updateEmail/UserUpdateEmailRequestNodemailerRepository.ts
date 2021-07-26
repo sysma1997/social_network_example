@@ -4,25 +4,21 @@ import { UserUpdateEmailRequestRepository } from "../../application/updateEmail/
 import { User as UserEntity } from "../../../shared/infrastructure/storage/entities/User"
 import { UserEmail } from "../../domain/UserEmail";
 import { UserId } from "../../domain/UserId";
-import fs from "fs"
 import jwt from "jsonwebtoken"
-import { MailHtml } from "../../../shared/infrastructure/email/MailHtml";
+import { MailHtml } from "../../../shared/infrastructure/mail/MailHtml";
 
 export class UserUpdateEmailRequestNodemailerRepository implements UserUpdateEmailRequestRepository {
     private connection: Connection
-    private account: any
     private transporter: Transporter
 
     constructor(connection: Connection) {
         this.connection = connection
 
-        const stringAccount = fs.readFileSync("./account.json").toString()
-        this.account = JSON.parse(stringAccount)
         this.transporter = createTransport({
-            service: "Gmail", 
+            service: process.env.NODEMAILER_SERVICE, 
             auth: {
-                user: this.account.user, 
-                pass: this.account.pass
+                user: process.env.NODEMAILER_AUTH_USER, 
+                pass: process.env.NODEMAILER_AUTH_PASS
             }
         })
     }
@@ -41,7 +37,7 @@ export class UserUpdateEmailRequestNodemailerRepository implements UserUpdateEma
             throw new Error("User not found.")
         }
 
-        const key = fs.readFileSync("./private.key").toString()
+        const key = process.env.JSONWEBTOKEN_PRIVATE_KEY as string
         const token = jwt.sign({
             id: user.id, 
             newEmail: newEmail.value
@@ -54,7 +50,7 @@ export class UserUpdateEmailRequestNodemailerRepository implements UserUpdateEma
             `http://localhost:3000/api/user/updateemail/${token}`)
         
         await this.transporter.sendMail({
-            from: `"${this.account.name}" <${this.account.user}>`,
+            from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_AUTH_USER}>`, 
             to: newEmail.value, 
             subject: "Update email", 
             html: html

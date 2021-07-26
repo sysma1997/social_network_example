@@ -9,70 +9,51 @@
 }
 
 .presentation {
-    padding: 0rem;
-    margin: 0 10rem;
-    flex: 1.5;
-}
-.presentationTitle {
     text-align: center;
 
+    padding: 2rem;
+    margin: 2rem;
+    flex: 1;
+}
+.presentationTitle {
     color: white;
-    font-size: 3.4vw;
+    font-size: 3.4em;
     font-weight: bold;
 }
 .presentationDescription {
     color: white;
-    font-size: 1.5vw;
+    font-size: 1.5em;
+}
+.presentationDescription ul {
+    list-style: none;
+    margin-left: -1rem;
 }
 
 .form {
     background-color: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(0.2rem);
+    backdrop-filter: blur(0.6rem);
+    -webkit-backdrop-filter: blur(0.6rem);
     border-radius: 0.4rem;
     box-shadow: 0rem 0.5rem 1rem rgba(68, 68, 68, 0.4);
 
     padding: 2rem;
-    margin: 0 12rem;
+    margin: 1rem;
 
     display: flex;
     flex-direction: column;
 
     flex: 1;
 }
-.formInput {
-    font-size: 1vw;
-
-    border-radius: 0.4rem;
-    border: none;
-
-    padding: 0.8rem;
-    margin-top: 0.5rem;
-}
-.formButtonLogin {
-    background: rgb(255, 184, 0);
-    color: white;
-
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-}
-.formButtonLogin:hover {
-    background: rgb(255, 218, 0);
-    cursor: pointer;
-    /* ANIMACION AQUI */
-}
-.formButtonRegister {
-    background: rgb(219, 99, 0);
-    color: white;
-
-    margin-top: 1rem;
-}
-.formButtonRegister:hover {
-    background: rgb(255, 115, 0);
-    cursor: pointer;
+.formSmall {
+    color: red;
+    
+    margin-left: 0.1rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.6rem;
 }
 .formForgetPassword {
-    color: white;
-    font-size: 1.1vw;
+    color: var(--color-secondary);
+    font-size: 1.1em;
     text-align: center;
 
     margin-top: 0.5rem;
@@ -82,8 +63,8 @@
     text-decoration: underline;
 }
 .formHr {
-    background: rgba(68, 68, 68, 0.5);
-    border: 1px solid rgba(68, 68, 68, 0.2);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     
     width: 100%;
     margin-top: 0.5rem;

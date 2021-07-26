@@ -35,7 +35,7 @@ export class RegisterUser {
             new UserImage(userDto.image)
         )
 
+        await this.sendMailRepository.sendMail(user)
         await this.repository.register(user)
-        this.sendMailRepository.sendMail(user)
     }
 }
