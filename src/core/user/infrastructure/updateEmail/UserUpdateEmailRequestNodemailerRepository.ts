@@ -47,7 +47,7 @@ export class UserUpdateEmailRequestNodemailerRepository implements UserUpdateEma
 
         const html = MailHtml("updateEmail", 
             user.name, 
-            `http://localhost:3000/api/user/updateemail/${token}`)
+            `${process.env.FRONTEND}/user/updateemail/${token}`)
         
         await this.transporter.sendMail({
             from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_AUTH_USER}>`, 

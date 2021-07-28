@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    align-items: center;
+
+    height: 100vh;
+}
+
+.form {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(0.6rem);
+    -webkit-backdrop-filter: blur(0.6rem);
+    border-radius: 0.4rem;
+    box-shadow: 0rem 0.5rem 1rem rgba(68, 68, 68, 0.4);
+
+    padding: 2rem;
+    margin: 1rem 25rem;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+.formTitle {
+    color: var(--color-secondary);
+    font-size: 1.5em;
+    font-weight: bold;
+
+    margin-bottom: 1rem;
+}
+.formGender {
+    display: flex;
+    flex-direction: row;
+
+    margin-top: 1rem
+}
+.formGenderType {
+    color: var(--color-secondary);
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 600;
+
+    flex: 1;
+}
+.formGenderType input[type=checkbox] {
+    transform: scale(2);
+    margin: 0 1rem;
+}
+
+@media screen and
+(max-width: 1024px) {
+    .form {
+        margin: 1rem 1rem;
+    }
+}

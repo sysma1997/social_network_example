@@ -46,7 +46,7 @@ export class UserPasswordRecoveryNodemailerRepository implements UserPasswordRec
 
         const html = MailHtml("recoverPassword", 
             user.name, 
-            `http://localhost:3000/${token}/`)
+            `${process.env.FRONTEND}/user/recoverpassword/${token}/`)
 
         await this.transporter.sendMail({
             from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_AUTH_USER}>`, 

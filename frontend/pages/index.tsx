@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
@@ -93,7 +92,7 @@ export default function Home() {
           <a className={styles.formForgetPassword}>Forgot password?</a>
         </Link>
         <hr className={styles.formHr} />
-        <Button>Register</Button>
+        <Link href="/register"><Button>Register</Button></Link>
       </div>
     </main>
   </>

@@ -1,7 +1,6 @@
 import { createTransport, Transporter } from "nodemailer";
 import { UserSendMailRepository } from "../../application/register/UserSendMailRepository";
 import { User } from "../../domain/User";
-import fs from "fs"
 import jwt from "jsonwebtoken"
 import { MailHtml } from "../../../shared/infrastructure/mail/MailHtml"
 
@@ -29,7 +28,7 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
 
         const html = MailHtml("register", 
             user.name.value, 
-            `http://localhost:3000/api/user/validate/${token}`)
+            `${process.env.FRONTEND}/user/validate/${token}`)
 
         await this.transporter.sendMail({
             from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_AUTH_USER}>`, 
