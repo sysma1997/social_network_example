@@ -13,23 +13,14 @@
 
     flex: 0;
 }
-.formGender {
+.formLinks {
     display: flex;
     flex-direction: row;
-
-    margin-top: 1rem
 }
-.formGenderType {
-    color: var(--color-secondary);
+.formLink {
     text-align: center;
-    font-size: 1.3em;
-    font-weight: 600;
-
-    flex: 1;
-}
-.formGenderType input[type=checkbox] {
-    transform: scale(2);
-    margin: 0 1rem;
+    
+    flex: 1
 }
 
 @media screen and

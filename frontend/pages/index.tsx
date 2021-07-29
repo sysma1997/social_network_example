@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import stylesForm from '../styles/Form.module.css'
 import styles from '../styles/Home.module.css'
 
 import { Button } from '../src/shared/infrastructure/components/button/Button'
@@ -80,19 +81,19 @@ export default function Home() {
           </ul>
         </div>
       </div>
-      <div className={styles.form}>
+      <div className={stylesForm.content}>
         <Input type="email" style={{border: emailBorder}} placeholder="Email" 
           value={email} onChange={event => setEmail(event.target.value)} />
-        <small className={styles.formSmall}>{emailError}</small>
+        <small className={stylesForm.small}>{emailError}</small>
         <Input type="password" style={{border: passwordBorder}} placeholder="Password" 
           value={password} onChange={event => setPassword(event.target.value)} />
-        <small className={styles.formSmall}>{passwordError}</small>
+        <small className={stylesForm.small}>{passwordError}</small>
         <Button onClick={login}>Login</Button>
         <Link href="#">
-          <a className={styles.formForgetPassword}>Forgot password?</a>
+          <a className={stylesForm.text}>Forgot password?</a>
         </Link>
-        <hr className={styles.formHr} />
-        <Link href="/register"><Button>Register</Button></Link>
+        <hr className={stylesForm.hr} />
+        <Link href="/register"><a className={stylesForm.text}>Register</a></Link>
       </div>
     </main>
   </>
