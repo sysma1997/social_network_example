@@ -6,12 +6,11 @@ import styles from '../styles/Home.module.css'
 
 import { Button } from '../src/shared/infrastructure/components/button/Button'
 import { Input } from '../src/shared/infrastructure/components/input/Input'
-import { EmailValue } from '../src/shared/domain/EmailValue'
 
 export default function Home() {
-  const [email, setEmail] = useState<string>("")
-  const [emailBorder, setEmailBorder] = useState<string>("")
-  const [emailError, setEmailError] = useState<string>("")
+  const [username, setUsername] = useState<string>("")
+  const [usernameBorder, setUsernameBorder] = useState<string>("")
+  const [usernameError, setUsernameError] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [passwordBorder, setPasswordBorder] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
@@ -30,26 +29,19 @@ export default function Home() {
     }
 
     const clearAll = () => {
-      clearError(setEmailBorder, setEmailError)
+      clearError(setUsernameBorder, setUsernameError)
       clearError(setPasswordBorder, setPasswordError)
     }
 
-    if(email === "" || password === "") {
-      if(email === "") setError(setEmailBorder, setEmailError, "Email not empty.")
-      else clearError(setEmailBorder, setEmailError)
+    if (username === "" || password === "") {
+      if(username === "") setError(setUsernameBorder, setUsernameError, "Username not empty.")
+      else clearError(setUsernameBorder, setUsernameError)
       if(password === "") setError(setPasswordBorder, setPasswordError, "Password not empty.")
       else clearError(setPasswordBorder, setPasswordError)
-
       return
     }
     clearAll()
-    if(!EmailValue.Validate(email)) {
-      setError(setEmailBorder, setEmailError, "Email not valid.")
-      
-      return 
-    }
-    
-    clearAll()
+    /*  */
   }
 
   return <>
@@ -82,9 +74,9 @@ export default function Home() {
         </div>
       </div>
       <div className={stylesForm.content}>
-        <Input type="email" style={{border: emailBorder}} placeholder="Email" 
-          value={email} onChange={event => setEmail(event.target.value)} />
-        <small className={stylesForm.small}>{emailError}</small>
+        <Input type="text" style={{border: usernameBorder}} placeholder="Username" 
+          value={username} onChange={event => setUsername(event.target.value)} />
+        <small className={stylesForm.small}>{usernameError}</small>
         <Input type="password" style={{border: passwordBorder}} placeholder="Password" 
           value={password} onChange={event => setPassword(event.target.value)} />
         <small className={stylesForm.small}>{passwordError}</small>

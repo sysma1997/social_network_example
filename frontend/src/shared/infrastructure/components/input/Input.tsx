@@ -7,6 +7,7 @@ interface InputProps {
     placeholder?: string, 
     type?: string, 
     value?: any, 
+    checked?: boolean
 
     onChange?: (event: ChangeEvent<HTMLInputElement>) => any
 }
@@ -17,4 +18,5 @@ export const Input = (props: InputProps) => <input
     type={props.type || "text"} 
     placeholder={props.placeholder} 
     value={props.value} 
+    checked={props.checked}
     onChange={props.onChange} />

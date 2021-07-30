@@ -3,5 +3,8 @@ module.exports = {
   images: {
     loader: "imgix", 
     path: ""
+  },
+  env: {
+    api: "http://localhost:8000/"
   }
 }
