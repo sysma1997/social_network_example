@@ -31,6 +31,15 @@
     transform: scale(2);
     margin: 0 1rem;
 }
+.formText {
+    text-align: left;
+    color: #222;
+
+    margin-bottom: 2rem;
+}
+.formText:hover {
+    text-decoration: none;
+}
 
 @media screen and
 (max-width: 1024px) {

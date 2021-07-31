@@ -30,6 +30,8 @@ export default function Register() {
     const [repeatPassword, setRepeatPassword] = useState<string>("")
     const [repeatPasswordBorder, setRepeatPasswordBorder] = useState<string>("")
     const [repeatPasswordError, setRepeatPasswordError] = useState<string>("")
+    const [messageError, setMessageError] = useState<string>("")
+    const [registerSuccess, setRegisterSuccess] = useState<boolean>(false)
 
     const register = async () => {
         const clearError = (inputBorder: Dispatch<SetStateAction<string>>,
@@ -99,7 +101,13 @@ export default function Register() {
         }
 
         Http.Init("POST", "user", JSON.stringify(user), response => {
-            console.log(response.toString())
+            if (response.status !== 201) {
+                setMessageError(response.result)
+
+                return
+            }
+            setMessageError("")
+            setRegisterSuccess(true)
         })
     }
 
@@ -129,7 +137,8 @@ export default function Register() {
             }}>
                 SYSMA
             </label>
-            <div className={`${stylesForm.content} ${styles.form}`}>
+            <div className={`${stylesForm.content} ${styles.form}`}
+                style={{ display: ((!registerSuccess) ? "flex" : "none") }}>
                 <label className={stylesForm.title}>Personal information</label>
                 <Input type="text" style={{ border: nameBorder }} placeholder="Full name"
                     value={name} onChange={event => setName(event.target.value)} />
@@ -166,10 +175,31 @@ export default function Register() {
                 <Input type="password" style={{ border: repeatPasswordBorder }} placeholder="Repeat password"
                     value={repeatPassword} onChange={event => setRepeatPassword(event.target.value)} />
                 <small className={stylesForm.small}>{repeatPasswordError}</small>
+                <label className={stylesForm.small} style={{ textAlign: "center" }}>
+                    <b>{messageError}</b>
+                </label>
                 <Button onClick={register}>Register</Button>
 
                 <Link href="/login">
                     <a className={stylesForm.text}>Already have and account?</a>
+                </Link>
+
+                <hr className={stylesForm.hr} />
+
+                <Link href="/">
+                    <a className={stylesForm.text}>Go back</a>
+                </Link>
+            </div>
+            <div className={`${stylesForm.content} ${styles.form}`}
+                style={{ display: ((registerSuccess) ? "flex" : "none") }}>
+                <label className={stylesForm.title}>Thanks for register in SYSMA!</label>
+
+                <label className={`${stylesForm.text} ${styles.formText}`}>
+                    An email has been sent to you to enable your account.
+                </label>
+
+                <Link href="/login">
+                    <a className={stylesForm.text}>Login</a>
                 </Link>
 
                 <hr className={stylesForm.hr} />
