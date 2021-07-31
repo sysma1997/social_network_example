@@ -9,9 +9,9 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
 
     constructor() {
         this.transporter = createTransport({
-            service: process.env.NODEMAILER_SERVICE, 
+            service: process.env.NODEMAILER_SERVICE,
             auth: {
-                user: process.env.NODEMAILER_AUTH_USER, 
+                user: process.env.NODEMAILER_AUTH_USER,
                 pass: process.env.NODEMAILER_AUTH_PASS
             }
         })
@@ -26,17 +26,17 @@ export class UserSendMailNodemailerRepository implements UserSendMailRepository 
             expiresIn: "1d"
         })
 
-        const html = MailHtml("register", 
-            user.name.value, 
+        const html = MailHtml("register",
+            user.name.value,
             `${process.env.FRONTEND}/user/validate/${token}`)
 
         await this.transporter.sendMail({
-            from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_AUTH_USER}>`, 
-            to: user.email.value, 
-            subject: "SYSMA SOCIAL NETWORK", 
+            from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_AUTH_USER}>`,
+            to: user.email.value,
+            subject: "SYSMA SOCIAL NETWORK",
             html: html
         }, (error, _) => {
-            if(error) {
+            if (error) {
                 throw new Error(error.message)
             }
         })

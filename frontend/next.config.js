@@ -5,6 +5,6 @@ module.exports = {
     path: ""
   },
   env: {
-    api: "http://localhost:8000/"
+    API: process.env.API
   }
 }
