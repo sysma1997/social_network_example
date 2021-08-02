@@ -17,7 +17,7 @@ export class Response {
 export class Http {
     static async Init(method: string,
         api: string,
-        body?: string,
+        body: string | null,
         action?: (response: Response) => any): Promise<Response> {
         try {
             const response = await fetch(`${process.env.API}/api/${api}`, {

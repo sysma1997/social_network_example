@@ -5,7 +5,6 @@ import styles from "../styles/Login.module.css"
 
 import { Input } from '../src/shared/infrastructure/components/input/Input'
 import { Button } from '../src/shared/infrastructure/components/button/Button'
-import { EmailValue } from '../src/shared/domain/EmailValue'
 
 export default function Login() {
     return <>
@@ -27,9 +26,9 @@ export default function Login() {
         <main className={styles.container}>
             {/* IMAGE DE SYSMA */}
             <label style={{
-                color: "var(--color-secondary)", 
-                fontSize: "4em", 
-                fontWeight: "bold", 
+                color: "var(--color-secondary)",
+                fontSize: "4em",
+                fontWeight: "bold",
                 margin: "2rem 0"
             }}>
                 SYSMA
@@ -38,7 +37,7 @@ export default function Login() {
                 <Input type="text" placeholder="Username" />
                 <Input type="password" placeholder="Password" />
                 <Button>Login</Button>
-                
+
                 <div className={styles.formLinks}>
                     <Link href="#">
                         <a className={`${stylesForm.text} ${styles.formLink}`}>Forgot password?</a>
@@ -47,9 +46,9 @@ export default function Login() {
                         <a className={`${stylesForm.text} ${styles.formLink}`}>Sign up for SYSMA</a>
                     </Link>
                 </div>
-                
+
                 <hr className={stylesForm.hr} />
-                
+
                 <Link href="/">
                     <a className={stylesForm.text}>Go back</a>
                 </Link>

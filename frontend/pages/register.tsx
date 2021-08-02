@@ -1,4 +1,4 @@
-import { Dispatch, useState, SetStateAction } from 'react'
+import { Dispatch, useState, SetStateAction, KeyboardEvent } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import stylesForm from '../styles/Form.module.css'
@@ -33,6 +33,9 @@ export default function Register() {
     const [messageError, setMessageError] = useState<string>("")
     const [registerSuccess, setRegisterSuccess] = useState<boolean>(false)
 
+    const keyDownRegister = async (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') await register()
+    }
     const register = async () => {
         const clearError = (inputBorder: Dispatch<SetStateAction<string>>,
             small: Dispatch<SetStateAction<string>>) => {
@@ -173,7 +176,8 @@ export default function Register() {
                     value={password} onChange={event => setPassword(event.target.value)} />
                 <small className={stylesForm.small}>{passwordError}</small>
                 <Input type="password" style={{ border: repeatPasswordBorder }} placeholder="Repeat password"
-                    value={repeatPassword} onChange={event => setRepeatPassword(event.target.value)} />
+                    value={repeatPassword} onChange={event => setRepeatPassword(event.target.value)}
+                    onKeyDown={keyDownRegister} />
                 <small className={stylesForm.small}>{repeatPasswordError}</small>
                 <label className={stylesForm.small} style={{ textAlign: "center" }}>
                     <b>{messageError}</b>
