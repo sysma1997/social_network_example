@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, KeyboardEvent, SetStateAction, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import stylesForm from '../styles/Form.module.css'
@@ -6,16 +7,30 @@ import styles from '../styles/Home.module.css'
 
 import { Button } from '../src/shared/infrastructure/components/button/Button'
 import { Input } from '../src/shared/infrastructure/components/input/Input'
+import { Http } from '../src/shared/infrastructure/Http'
 
 export default function Home() {
+  const router = useRouter()
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if(token !== null) {
+      router.push("/panel")
+    }
+  }, [])
+
   const [username, setUsername] = useState<string>("")
   const [usernameBorder, setUsernameBorder] = useState<string>("")
   const [usernameError, setUsernameError] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [passwordBorder, setPasswordBorder] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
+  const [messageError, setMessageError] = useState<string>("")
 
-  const login = () => {
+  const keyDownLogin = async (event: KeyboardEvent<HTMLInputElement>) => {
+    if(event.key === "Enter") login()
+  }
+  const login = async () => {
     const clearError = (inputBorder: Dispatch<SetStateAction<string>>, 
       small: Dispatch<SetStateAction<string>>) => {
       inputBorder("")
@@ -41,7 +56,21 @@ export default function Home() {
       return
     }
     clearAll()
-    /*  */
+    
+    const login = {
+      username, 
+      password
+    }
+    const response = await Http.Init("POST", "user/login", JSON.stringify(login))
+    if(response.status !== 200) {
+      setMessageError(response.result)
+
+      return
+    }
+    setMessageError("")
+
+    localStorage.setItem("token", response.result)
+    router.push("/panel")
   }
 
   return <>
@@ -78,8 +107,13 @@ export default function Home() {
           value={username} onChange={event => setUsername(event.target.value)} />
         <small className={stylesForm.small}>{usernameError}</small>
         <Input type="password" style={{border: passwordBorder}} placeholder="Password" 
-          value={password} onChange={event => setPassword(event.target.value)} />
+          value={password} 
+          onChange={event => setPassword(event.target.value)} 
+          onKeyDown={keyDownLogin} />
         <small className={stylesForm.small}>{passwordError}</small>
+        <label className={stylesForm.small} style={{ textAlign: "center" }}>
+          <b>{messageError}</b>
+        </label>
         <Button onClick={login}>Login</Button>
         <Link href="#">
           <a className={stylesForm.text}>Forgot password?</a>

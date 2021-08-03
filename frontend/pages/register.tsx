@@ -1,4 +1,5 @@
-import { Dispatch, useState, SetStateAction, KeyboardEvent } from 'react'
+import { Dispatch, useState, useEffect, SetStateAction, KeyboardEvent } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import stylesForm from '../styles/Form.module.css'
@@ -11,6 +12,15 @@ import { UuidValue } from '../src/shared/domain/UuidValue'
 import { Http } from '../src/shared/infrastructure/Http'
 
 export default function Register() {
+    const router = useRouter()
+
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        if(token !== null) {
+          router.push("/panel")
+        }
+      }, [])
+
     const [name, setName] = useState<string>("")
     const [nameBorder, setNameBorder] = useState<string>("")
     const [nameError, setNameError] = useState<string>("")
