@@ -15,11 +15,11 @@ export default function Register() {
     const router = useRouter()
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        if(token !== null) {
-          router.push("/panel")
-        }
-      }, [])
+        Http.Init("GET", "user", null, response => {
+            if (response.status === 200)
+                router.push("panel")
+        })
+    }, [])
 
     const [name, setName] = useState<string>("")
     const [nameBorder, setNameBorder] = useState<string>("")

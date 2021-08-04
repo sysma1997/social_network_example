@@ -20,11 +20,16 @@ export class Http {
         body: string | null,
         action?: (response: Response) => any): Promise<Response> {
         try {
+            let headers: any = {
+                'Content-Type': 'application/json'
+            }
+            const token = localStorage.getItem("token")
+            if (token !== null)
+                headers["Authorization"] = `Bearer ${token}`
+
             const response = await fetch(`${process.env.API}/api/${api}`, {
                 method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: headers,
                 body: body
             })
 

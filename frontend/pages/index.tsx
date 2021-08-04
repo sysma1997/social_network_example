@@ -11,12 +11,12 @@ import { Http } from '../src/shared/infrastructure/Http'
 
 export default function Home() {
   const router = useRouter()
-  
+
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if(token !== null) {
-      router.push("/panel")
-    }
+    Http.Init("GET", "user", null, response => {
+      if (response.status === 200)
+        router.push("panel")
+    })
   }, [])
 
   const [username, setUsername] = useState<string>("")
@@ -28,16 +28,16 @@ export default function Home() {
   const [messageError, setMessageError] = useState<string>("")
 
   const keyDownLogin = async (event: KeyboardEvent<HTMLInputElement>) => {
-    if(event.key === "Enter") login()
+    if (event.key === "Enter") await login()
   }
   const login = async () => {
-    const clearError = (inputBorder: Dispatch<SetStateAction<string>>, 
+    const clearError = (inputBorder: Dispatch<SetStateAction<string>>,
       small: Dispatch<SetStateAction<string>>) => {
       inputBorder("")
       small("")
     }
-    const setError = (inputBorder: Dispatch<SetStateAction<string>>, 
-      small: Dispatch<SetStateAction<string>>, 
+    const setError = (inputBorder: Dispatch<SetStateAction<string>>,
+      small: Dispatch<SetStateAction<string>>,
       message: string) => {
       inputBorder("2px solid red")
       small(message)
@@ -49,20 +49,20 @@ export default function Home() {
     }
 
     if (username === "" || password === "") {
-      if(username === "") setError(setUsernameBorder, setUsernameError, "Username not empty.")
+      if (username === "") setError(setUsernameBorder, setUsernameError, "Username not empty.")
       else clearError(setUsernameBorder, setUsernameError)
-      if(password === "") setError(setPasswordBorder, setPasswordError, "Password not empty.")
+      if (password === "") setError(setPasswordBorder, setPasswordError, "Password not empty.")
       else clearError(setPasswordBorder, setPasswordError)
       return
     }
     clearAll()
-    
+
     const login = {
-      username, 
+      username,
       password
     }
     const response = await Http.Init("POST", "user/login", JSON.stringify(login))
-    if(response.status !== 200) {
+    if (response.status !== 200) {
       setMessageError(response.result)
 
       return
@@ -92,9 +92,9 @@ export default function Home() {
     <main className={styles.container}>
       <div className={styles.presentation}>
         <div className={styles.presentationTitle}>Welcome to SYSMA!</div>
-        <br/>
+        <br />
         <div className={styles.presentationDescription}>
-          This is a simple example of how to create a social network. 
+          This is a simple example of how to create a social network.
           <ul><b>Features</b>:
             <li>Create and manage account with tokens.</li>
             <li>Add and search for users.</li>
@@ -103,19 +103,19 @@ export default function Home() {
         </div>
       </div>
       <div className={stylesForm.content}>
-        <Input type="text" style={{border: usernameBorder}} placeholder="Username" 
+        <Input type="text" style={{ border: usernameBorder }} placeholder="Username"
           value={username} onChange={event => setUsername(event.target.value)} />
         <small className={stylesForm.small}>{usernameError}</small>
-        <Input type="password" style={{border: passwordBorder}} placeholder="Password" 
-          value={password} 
-          onChange={event => setPassword(event.target.value)} 
+        <Input type="password" style={{ border: passwordBorder }} placeholder="Password"
+          value={password}
+          onChange={event => setPassword(event.target.value)}
           onKeyDown={keyDownLogin} />
         <small className={stylesForm.small}>{passwordError}</small>
         <label className={stylesForm.small} style={{ textAlign: "center" }}>
           <b>{messageError}</b>
         </label>
         <Button onClick={login}>Login</Button>
-        <Link href="#">
+        <Link href="/user/forgotPassword">
           <a className={stylesForm.text}>Forgot password?</a>
         </Link>
         <hr className={stylesForm.hr} />
