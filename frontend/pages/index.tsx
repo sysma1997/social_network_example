@@ -5,9 +5,10 @@ import Link from 'next/link'
 import stylesForm from '../styles/Form.module.css'
 import styles from '../styles/Home.module.css'
 
-import { Button } from '../src/shared/infrastructure/components/button/Button'
-import { Input } from '../src/shared/infrastructure/components/input/Input'
+import { Button } from '../src/components/button/Button'
+import { Input } from '../src/components/input/Input'
 import { Http } from '../src/shared/infrastructure/Http'
+import { setError, clearError } from '../src/shared/infrastructure/ValidationInput'
 
 export default function Home() {
   const router = useRouter()
@@ -31,18 +32,6 @@ export default function Home() {
     if (event.key === "Enter") await login()
   }
   const login = async () => {
-    const clearError = (inputBorder: Dispatch<SetStateAction<string>>,
-      small: Dispatch<SetStateAction<string>>) => {
-      inputBorder("")
-      small("")
-    }
-    const setError = (inputBorder: Dispatch<SetStateAction<string>>,
-      small: Dispatch<SetStateAction<string>>,
-      message: string) => {
-      inputBorder("2px solid red")
-      small(message)
-    }
-
     const clearAll = () => {
       clearError(setUsernameBorder, setUsernameError)
       clearError(setPasswordBorder, setPasswordError)

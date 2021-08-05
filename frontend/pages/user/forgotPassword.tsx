@@ -5,10 +5,11 @@ import Link from 'next/link'
 import stylesForm from '../../styles/Form.module.css'
 import styles from '../../styles/Register.module.css'
 
-import { Input } from '../../src/shared/infrastructure/components/input/Input'
-import { Button } from '../../src/shared/infrastructure/components/button/Button'
+import { Input } from '../../src/components/input/Input'
+import { Button } from '../../src/components/button/Button'
 import { EmailValue } from '../../src/shared/domain/EmailValue'
 import { Http } from '../../src/shared/infrastructure/Http'
+import { setError, clearError } from '../../src/shared/infrastructure/ValidationInput'
 
 export default function ForgotPassword() {
     const router = useRouter()
@@ -30,18 +31,6 @@ export default function ForgotPassword() {
         if (event.key === "Enter") await forgotPassword()
     }
     const forgotPassword = async () => {
-        const clearError = (inputBorder: Dispatch<SetStateAction<string>>,
-            small: Dispatch<SetStateAction<string>>) => {
-            inputBorder("")
-            small("")
-        }
-        const setError = (inputBorder: Dispatch<SetStateAction<string>>,
-            small: Dispatch<SetStateAction<string>>,
-            message: string) => {
-            inputBorder("2px solid red")
-            small(message)
-        }
-
         if (email === "") {
             setError(setEmailBorder, setEmailError, "Email not empty.")
 

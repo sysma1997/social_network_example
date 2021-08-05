@@ -5,11 +5,12 @@ import Link from 'next/link'
 import stylesForm from '../styles/Form.module.css'
 import styles from '../styles/Register.module.css'
 
-import { Input } from '../src/shared/infrastructure/components/input/Input'
-import { Button } from '../src/shared/infrastructure/components/button/Button'
+import { Input } from '../src/components/input/Input'
+import { Button } from '../src/components/button/Button'
 import { EmailValue } from '../src/shared/domain/EmailValue'
 import { UuidValue } from '../src/shared/domain/UuidValue'
 import { Http } from '../src/shared/infrastructure/Http'
+import { setError, clearError } from '../src/shared/infrastructure/ValidationInput'
 
 export default function Register() {
     const router = useRouter()
@@ -47,18 +48,6 @@ export default function Register() {
         if (event.key === 'Enter') await register()
     }
     const register = async () => {
-        const clearError = (inputBorder: Dispatch<SetStateAction<string>>,
-            small: Dispatch<SetStateAction<string>>) => {
-            inputBorder("")
-            small("")
-        }
-        const setError = (inputBorder: Dispatch<SetStateAction<string>>,
-            small: Dispatch<SetStateAction<string>>,
-            message: string) => {
-            inputBorder("2px solid red")
-            small(message)
-        }
-
         const clearAll = () => {
             clearError(setNameBorder, setNameError)
             clearError(setBirthdayBorder, setBirthdayError)
@@ -98,7 +87,7 @@ export default function Register() {
         if (password !== repeatPassword) {
             setError(setPasswordBorder, setPasswordError, "")
             setError(setRepeatPasswordBorder, setRepeatPasswordError,
-                "Password and repeat password don't match")
+                "Password and repeat password don't match.")
             return
         }
         clearAll()

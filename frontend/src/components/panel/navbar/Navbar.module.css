@@ -1,0 +1,32 @@
+.navbar {
+    background-color: var(--color-primary);
+    color: white;
+
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.8rem 0.5rem;
+}
+.navColumn {
+    flex: 1
+}
+
+.navSysma {
+    color: var(--color-secondary);
+    font-size: 1.5rem;
+    font-weight: bold;
+
+    margin-left: 1rem;
+}
+.navSysma:hover {
+    color: rgb(243, 134, 45);
+}
+
+.navEnd {
+    text-align: end;
+    font-size: 1.2rem;
+}
