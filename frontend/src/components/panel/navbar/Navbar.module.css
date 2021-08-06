@@ -1,10 +1,12 @@
 .navbar {
     background-color: var(--color-primary);
     color: white;
+    box-shadow: 0rem 0.1rem 0.5rem gray;
 
     position: sticky;
     display: flex;
     flex-direction: row;
+    top: 0;
 
     align-items: center;
 
@@ -15,18 +17,111 @@
     flex: 1
 }
 
+.navbarMenuResponsive {
+    display: none;
+}
+
 .navSysma {
-    color: var(--color-secondary);
+    color: white;
     font-size: 1.5rem;
     font-weight: bold;
 
     margin-left: 1rem;
 }
 .navSysma:hover {
-    color: rgb(243, 134, 45);
+    color: var(--color-secondary);
+    cursor: pointer;
+
+    animation-name: navLabel;
+    animation-duration: 0.5s;
+}
+
+.navMedium {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    flex: 1;
+}
+.navSearchContent {
+    display: flex;
+    justify-content: center;
+
+    flex: 2;
+}
+.navSearch {
+    border-radius: 1rem 0rem 0rem 1rem;
+
+    margin: 0;
+    height: 3rem;
+    max-width: 50rem;
+
+    flex: 1;
+}
+.navSearchButton {
+    background-color: #eee;
+    color: black;
+    border-radius: 0rem 1rem 1rem 0rem;
+
+    margin: 0;
+    height: 3rem;
+}
+.navSearchButton:hover {
+    background-color: var(--color-secondary);
+    color: white;
+
+    animation-name: navSearchButton;
+    animation-duration: 0.5s;
 }
 
 .navEnd {
     text-align: end;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+.navEndItem {
+    padding: 0.5rem;
+}
+.navEndItem:hover {
+    color: var(--color-secondary);
+    cursor: pointer;
+
+    animation-name: navLabel;
+    animation-duration: 0.5s;
+}
+
+@keyframes navSearchButton {
+    from {
+        background-color: white;
+    }
+    to {
+        background-color: var(--color-secondary);
+    }
+}
+@keyframes navLabel {
+    from {
+        color: white;
+    }
+    to {
+        color: var(--color-secondary);
+    }
+}
+
+@media screen and 
+(max-width: 1024px) {
+    .navbar {
+        justify-content: space-between;
+    }
+    .navbarMenuResponsive {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: bold;
+
+        margin: 0;
+        margin-right: 1rem;
+        padding: 0.2rem 1.5rem;
+    }
+    .navMedium {
+        display: none;
+    }
 }
