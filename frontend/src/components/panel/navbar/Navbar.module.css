@@ -20,6 +20,9 @@
 .navbarMenuResponsive {
     display: none;
 }
+.showMenuResponsive {
+    display: flex !important;
+}
 
 .navSysma {
     color: white;
@@ -111,6 +114,7 @@
 (max-width: 1024px) {
     .navbar {
         justify-content: space-between;
+        flex-wrap: wrap;
     }
     .navbarMenuResponsive {
         display: block;
@@ -123,5 +127,15 @@
     }
     .navMedium {
         display: none;
+        flex-direction: column-reverse;
+    }
+    .navEnd {
+        display: flex;
+        flex-direction: column;
+        
+        margin: 1rem 0;
+    }
+    .navSearchContent {
+        width: 95%;
     }
 }
