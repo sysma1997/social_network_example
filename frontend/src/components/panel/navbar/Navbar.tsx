@@ -23,7 +23,6 @@ export const Navbar = (props: NavbarProps) => {
 
     const onClickShowMenuResponsive = () => {
         setShowMenuResponsive(!showMenuResponsive)
-        console.log(showMenuResponsive)
     }
 
     return <nav className={styles.navbar}>

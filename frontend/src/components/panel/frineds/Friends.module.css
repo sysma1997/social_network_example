@@ -1,0 +1,10 @@
+.friends {
+    border: 1px solid gray;
+
+    margin-top: 3.4rem;
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
