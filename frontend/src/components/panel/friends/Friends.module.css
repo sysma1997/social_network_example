@@ -1,0 +1,53 @@
+.friends {
+    background: white;
+    box-shadow: -0.1rem 0rem 0.5rem gray;
+
+    margin-top: 3.4rem;
+    width: 18rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+.showFriends {
+    margin-right: 1rem;
+
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+.friendsContent {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column-reverse;
+
+    flex: 1;
+}
+.list {
+}
+.noList {
+    color: gray;
+
+    text-align: center;
+}
+
+.controls {
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: row-reverse;
+}
+.controlHideFriends {
+    border-radius: 0;
+
+    margin: 0;
+}

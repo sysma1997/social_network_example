@@ -1,0 +1,45 @@
+.newPost {
+    background: whitesmoke;
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 0.3rem;
+    box-shadow: 0 0.1rem 0.3rem gray;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+.newPostTitle {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    
+    margin-bottom: 0.5rem;
+}
+.newPostDescription {
+    font-size: 1em;
+
+    border-radius: 0.4rem;
+    border: none;
+
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 5rem;
+}
+.newPostDescription:focus {
+    outline: none;
+}
+.newPostFile {
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 0.3rem;
+    cursor: pointer;
+    text-align: center;
+    
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+.newPostFile input[type="file"] {
+    display: none;
+}

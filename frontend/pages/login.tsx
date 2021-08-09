@@ -1,4 +1,4 @@
-import { Dispatch, KeyboardEvent, SetStateAction, useState, useEffect } from 'react'
+import { KeyboardEvent, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from "next/head";
 import Link from "next/link"

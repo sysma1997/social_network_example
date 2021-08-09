@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Head from "next/head"
-import styles from "../../styles/Panel.module.css"
 
 import { User } from "../../src/user/domain/User"
 
@@ -9,7 +8,7 @@ import { Http } from "../../src/shared/infrastructure/Http"
 
 import { Navbar } from "../../src/components/panel/navbar/Navbar"
 import { PanelContent } from "../../src/components/panel/PanelContent"
-import { Friends } from "../../src/components/panel/frineds/Friends"
+import { Friends } from "../../src/components/panel/friends/Friends"
 
 export default function Panel() {
     const router = useRouter()
@@ -34,9 +33,7 @@ export default function Panel() {
 
         <main>
             <Navbar user={user} />
-            <div className={styles.panel}>
-                <PanelContent />
-            </div>
+            <PanelContent />
             <Friends />
         </main>
     </>
