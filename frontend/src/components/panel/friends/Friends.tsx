@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCommentAlt, faTimes } from "@fortawesome/free-solid-svg-icons"
 import styles from "./Friends.module.css"
 
 import { UuidValue } from "../../../shared/domain/UuidValue"
@@ -50,11 +52,11 @@ export const Friends = () => {
             </div>
             <div className={styles.controls}>
                 <Button className={styles.controlHideFriends} onClick={changeShowFriends}>
-                    Hide
+                    <FontAwesomeIcon icon={faTimes} size="2x" />
                 </Button>
             </div>
         </div> || <Button className={styles.showFriends} onClick={changeShowFriends}>
-                Friends
+                <FontAwesomeIcon icon={faCommentAlt} size="2x" />
             </Button>}
     </>
 }

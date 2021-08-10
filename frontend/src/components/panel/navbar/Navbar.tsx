@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { User } from '../../../user/domain/User'
 import styles from './Navbar.module.css'
 
@@ -37,7 +39,9 @@ export const Navbar = (props: NavbarProps) => {
             `${(showMenuResponsive) && styles.showMenuResponsive}`}>
             <div className={styles.navSearchContent}>
                 <Input className={styles.navSearch} placeholder="Search..." />
-                <Button className={styles.navSearchButton}>Search</Button>
+                <Button className={styles.navSearchButton}>
+                    <FontAwesomeIcon icon={faSearch} />
+                </Button>
             </div>
             <div className={styles.navEnd}>
                 <label className={styles.navEndItem}>{user.username.toUpperCase()}</label>
