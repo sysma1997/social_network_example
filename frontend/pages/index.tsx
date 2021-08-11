@@ -8,7 +8,7 @@ import styles from '../styles/Home.module.css'
 import { Button } from '../src/components/button/Button'
 import { Input } from '../src/components/input/Input'
 import { Http } from '../src/shared/infrastructure/Http'
-import { setError, clearError } from '../src/shared/infrastructure/ValidationInput'
+import { setErrorStyle, setError, clearError } from '../src/shared/infrastructure/ValidationInput'
 
 export default function Home() {
   const router = useRouter()
@@ -94,13 +94,13 @@ export default function Home() {
       <div className={stylesForm.content}>
         <Input type="text" style={{ border: usernameBorder }} placeholder="Username"
           value={username} onChange={event => setUsername(event.target.value)} />
-        <small className={stylesForm.small}>{usernameError}</small>
+        <small style={setErrorStyle}>{usernameError}</small>
         <Input type="password" style={{ border: passwordBorder }} placeholder="Password"
           value={password}
           onChange={event => setPassword(event.target.value)}
           onKeyDown={keyDownLogin} />
-        <small className={stylesForm.small}>{passwordError}</small>
-        <label className={stylesForm.small} style={{ textAlign: "center" }}>
+        <small style={setErrorStyle}>{passwordError}</small>
+        <label style={{...setErrorStyle,  textAlign: "center" }}>
           <b>{messageError}</b>
         </label>
         <Button onClick={login}>Login</Button>

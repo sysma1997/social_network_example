@@ -9,7 +9,7 @@ import { Input } from '../../src/components/input/Input'
 import { Button } from '../../src/components/button/Button'
 import { EmailValue } from '../../src/shared/domain/EmailValue'
 import { Http } from '../../src/shared/infrastructure/Http'
-import { setError, clearError } from '../../src/shared/infrastructure/ValidationInput'
+import { setErrorStyle, setError, clearError } from '../../src/shared/infrastructure/ValidationInput'
 
 export default function ForgotPassword() {
     const router = useRouter()
@@ -87,8 +87,8 @@ export default function ForgotPassword() {
                     value={email}
                     onChange={event => setEmail(event.target.value)}
                     onKeyDown={keyDownForgotPassword} />
-                <small className={stylesForm.small}>{emailError}</small>
-                <label className={stylesForm.small} style={{ textAlign: "center" }}>
+                <small style={setErrorStyle}>{emailError}</small>
+                <label style={{...setErrorStyle,  textAlign: "center" }}>
                     <b>{messageError}</b>
                 </label>
                 <Button onClick={forgotPassword}>Login</Button>

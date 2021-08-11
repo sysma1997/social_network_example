@@ -8,11 +8,11 @@ import styles from './Navbar.module.css'
 import { Input } from '../../input/Input'
 import { Button } from '../../button/Button'
 
-interface NavbarProps {
+interface Props {
     user: User
 }
 
-export const Navbar = (props: NavbarProps) => {
+export const Navbar = (props: Props) => {
     const { user } = props
     const router = useRouter()
 

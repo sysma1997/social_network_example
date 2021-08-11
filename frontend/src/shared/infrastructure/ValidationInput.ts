@@ -1,4 +1,11 @@
-import { Dispatch, SetStateAction } from "react"
+import { CSSProperties, Dispatch, SetStateAction } from "react"
+
+export const setErrorStyle: CSSProperties = {
+    color: "red", 
+    marginLeft: "0.1rem", 
+    marginTop: "0.2rem", 
+    marginBottom: "0.6rem"
+}
 
 export const clearError = (inputBorder: Dispatch<SetStateAction<string>>,
     small: Dispatch<SetStateAction<string>>) => {

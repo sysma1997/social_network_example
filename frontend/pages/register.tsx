@@ -10,7 +10,7 @@ import { Button } from '../src/components/button/Button'
 import { EmailValue } from '../src/shared/domain/EmailValue'
 import { UuidValue } from '../src/shared/domain/UuidValue'
 import { Http } from '../src/shared/infrastructure/Http'
-import { setError, clearError } from '../src/shared/infrastructure/ValidationInput'
+import { setErrorStyle, setError, clearError } from '../src/shared/infrastructure/ValidationInput'
 
 export default function Register() {
     const router = useRouter()
@@ -144,11 +144,11 @@ export default function Register() {
                 <label className={stylesForm.title}>Personal information</label>
                 <Input type="text" style={{ border: nameBorder }} placeholder="Full name"
                     value={name} onChange={event => setName(event.target.value)} />
-                <small className={stylesForm.small}>{nameError}</small>
+                <small style={setErrorStyle}>{nameError}</small>
                 <Input type="date" style={{ textAlign: "center", fontSize: 18, border: birthdayBorder }}
                     placeholder="Birthday" value={birthday}
                     onChange={event => setBirthday(event.target.value)} />
-                <small className={stylesForm.small}>{birthdayError}</small>
+                <small style={setErrorStyle}>{birthdayError}</small>
                 <div className={styles.formGender}>
                     <div className={`${styles.formGenderType}`}>
                         <label onClick={() => setGender(false)}>Male</label>
@@ -167,18 +167,18 @@ export default function Register() {
                 <label className={stylesForm.title}>Information to create the user</label>
                 <Input type="email" style={{ border: emailBorder }} placeholder="Email"
                     value={email} onChange={event => setEmail(event.target.value)} />
-                <small className={stylesForm.small}>{emailError}</small>
+                <small style={setErrorStyle}>{emailError}</small>
                 <Input type="text" style={{ border: usernameBorder }} placeholder="Username"
                     value={username} onChange={event => setUsername(event.target.value)} />
-                <small className={stylesForm.small}>{usernameError}</small>
+                <small style={setErrorStyle}>{usernameError}</small>
                 <Input type="password" style={{ border: passwordBorder }} placeholder="Password"
                     value={password} onChange={event => setPassword(event.target.value)} />
-                <small className={stylesForm.small}>{passwordError}</small>
+                <small style={setErrorStyle}>{passwordError}</small>
                 <Input type="password" style={{ border: repeatPasswordBorder }} placeholder="Repeat password"
                     value={repeatPassword} onChange={event => setRepeatPassword(event.target.value)}
                     onKeyDown={keyDownRegister} />
-                <small className={stylesForm.small}>{repeatPasswordError}</small>
-                <label className={stylesForm.small} style={{ textAlign: "center" }}>
+                <small style={setErrorStyle}>{repeatPasswordError}</small>
+                <label style={{...setErrorStyle,  textAlign: "center" }}>
                     <b>{messageError}</b>
                 </label>
                 <Button onClick={register}>Register</Button>

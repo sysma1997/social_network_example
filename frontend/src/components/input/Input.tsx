@@ -1,7 +1,7 @@
 import { ChangeEvent, CSSProperties, KeyboardEvent } from 'react'
 import styles from './Input.module.css'
 
-interface InputProps {
+interface Props {
     className?: string,
     style?: CSSProperties,
     placeholder?: string,
@@ -13,7 +13,7 @@ interface InputProps {
     onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => any
 }
 
-export const Input = (props: InputProps) => <input
+export const Input = (props: Props) => <input
     className={`${styles.input} ${props.className}`}
     style={props.style}
     type={props.type || "text"}

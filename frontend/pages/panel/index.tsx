@@ -33,7 +33,7 @@ export default function Panel() {
 
         <main>
             <Navbar user={user} />
-            <PanelContent />
+            <PanelContent user={user} />
             <Friends />
         </main>
     </>

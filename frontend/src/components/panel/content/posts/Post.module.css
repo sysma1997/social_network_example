@@ -9,6 +9,21 @@
     flex-direction: column;
     padding: 1rem;
 }
+.newPostFile {
+    color: gray;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 0.3rem;
+    cursor: pointer;
+    text-align: center;
+    
+    margin-top: 1rem;
+    padding: 0.5rem;
+    max-height: 20rem;
+    overflow: auto;
+}
+.newPostFile input[type="file"] {
+    display: none;
+}
 .newPostTitle {
     color: var(--color-primary);
     font-size: 1.2rem;
@@ -30,17 +45,4 @@
 }
 .newPostDescription:focus {
     outline: none;
-}
-.newPostFile {
-    color: gray;
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    border-radius: 0.3rem;
-    cursor: pointer;
-    text-align: center;
-    
-    margin-top: 1rem;
-    padding: 0.5rem;
-}
-.newPostFile input[type="file"] {
-    display: none;
 }

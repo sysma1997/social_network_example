@@ -30,13 +30,6 @@
 .text:hover {
     text-decoration: underline;
 }
-.small {
-    color: red;
-    
-    margin-left: 0.1rem;
-    margin-top: 0.2rem;
-    margin-bottom: 0.6rem;
-}
 .hr {
     background: rgba(255, 255, 255, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.2);
