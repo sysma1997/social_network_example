@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect, EventHandler, KeyboardEvent, TextareaHTMLAttributes } from "react"
+import { ChangeEvent, useState, useEffect, KeyboardEvent } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUpload } from "@fortawesome/free-solid-svg-icons"
 import styles from "./Post.module.css"
@@ -8,6 +8,7 @@ import { Input } from "../../../input/Input"
 import { setErrorStyle, setError, clearError } from "../../../../shared/infrastructure/ValidationInput"
 import { UuidValue } from "../../../../shared/domain/UuidValue"
 import { Post } from "../../../../post/domain/Post"
+import { Http } from "../../../../shared/infrastructure/Http"
 
 interface Props {
     userId: string
@@ -24,9 +25,10 @@ export const Posts = (props: Props) => {
     const [description, setDescription] = useState<string>("")
     const [descriptionBorder, setDescriptionBorder] = useState<string>("")
     const [descriptionError, setDescriptionError] = useState<string>("")
+    const [messageError, setMessageError] = useState<string>("")
 
     useEffect(() => {
-        if(!image) {
+        if (!image) {
             setPreview(null)
             return
         }
@@ -38,7 +40,7 @@ export const Posts = (props: Props) => {
     }, [image])
 
     const changeImage = (event: ChangeEvent<HTMLInputElement>) => {
-        if(!event.target.files) {
+        if (!event.target.files) {
             setImage(null)
             return;
         }
@@ -47,7 +49,7 @@ export const Posts = (props: Props) => {
     }
 
     const keyDownPublish = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-        if(event.key === "Enter") publish()
+        if (event.key === "Enter") publish()
     }
     const publish = () => {
         const clearAll = () => {
@@ -55,24 +57,34 @@ export const Posts = (props: Props) => {
             clearError(setDescriptionBorder, setDescriptionError)
         }
 
-        if (title === "" || 
+        if (title === "" ||
             description === "") {
-            if(title === "") setError(setTitleBorder, setTitleError, "Title is required.")
-            if(description === "") 
+            if (title === "") setError(setTitleBorder, setTitleError, "Title is required.")
+            if (description === "")
                 setError(setDescriptionBorder, setDescriptionError, "Description is required.")
             return
         }
         clearAll()
 
-        const post = new Post(JSON.stringify({
-            id: UuidValue.Generate().value, 
-            userId: userId, 
-            title, 
-            description, 
-            image: image?.name, 
-            date: new Date()
-        }))
-        console.log(post)
+        const form = new FormData()
+        form.append("id", UuidValue.Generate().value)
+        form.append("userId", userId)
+        form.append("title", title)
+        form.append("description", description)
+        form.append("image", image!)
+        form.append("date", new Date().toString())
+
+        Http.Init("POST", "post", form, response => {
+            if (response.status !== 201) {
+                setMessageError(response.result)
+                return
+            }
+            setMessageError("")
+
+            setImage(null)
+            setTitle("")
+            setDescription("")
+        })
     }
 
     return <div>
@@ -81,21 +93,24 @@ export const Posts = (props: Props) => {
             <label className={styles.newPostFile}>
                 <input type="file" accept="image/*" onChange={changeImage} />
                 {(!image) && <>
-                    <FontAwesomeIcon icon={faUpload} style={{marginRight: "1rem"}} />
+                    <FontAwesomeIcon icon={faUpload} style={{ marginRight: "1rem" }} />
                     Upload image...
                 </> || <img className={styles.newPostImage} src={preview!} alt={image!.name} />}
             </label>
-            <Input style={{border: titleBorder}} placeholder="Title" 
+            <Input style={{ border: titleBorder }} placeholder="Title"
                 value={title}
                 onChange={event => setTitle(event.target.value)} />
             <small style={setErrorStyle}>{titleError}</small>
-            <textarea className={styles.newPostDescription} 
-                style={{border: descriptionBorder}}
-                placeholder="Description" rows={5} 
-                value={description} 
-                onChange={event => setDescription(event.target.value)} 
+            <textarea className={styles.newPostDescription}
+                style={{ border: descriptionBorder }}
+                placeholder="Description" rows={5}
+                value={description}
+                onChange={event => setDescription(event.target.value)}
                 onKeyDown={keyDownPublish} />
             <small style={setErrorStyle}>{descriptionError}</small>
+            <label style={{ ...setErrorStyle, textAlign: "center" }}>
+                <b dangerouslySetInnerHTML={{ __html: messageError }}></b>
+            </label>
             <Button onClick={publish}>Publish</Button>
         </div>
     </div>
