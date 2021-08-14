@@ -1,5 +1,5 @@
 .friends {
-    background: white;
+    background-color: white;
     box-shadow: -0.1rem 0rem 0.5rem gray;
 
     margin-top: 3.4rem;
@@ -40,7 +40,6 @@
 }
 
 .controls {
-
     width: 100%;
 
     display: flex;

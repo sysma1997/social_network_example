@@ -15,7 +15,7 @@ export class PostGetMyPostsTypeormRepository implements PostGetMyPostsRepository
     constructor(connection: Connection) {
         this.connection = connection
     }
-    
+
     async myPosts(userId: UserId): Promise<Post[]> {
         const manager = this.connection.manager
 
@@ -24,16 +24,17 @@ export class PostGetMyPostsTypeormRepository implements PostGetMyPostsRepository
             .where("userId = :userId", {
                 userId: userId.value
             })
+            .orderBy("date", "DESC")
             .getMany()
             .catch(error => {
                 throw new Error(error)
             }))
             .map(post => new Post(
-                new PostId(post.id), 
-                new UserId(post.userId), 
-                new PostTitle(post.title), 
-                new PostDescription(post.description), 
-                new PostDate(post.date), 
+                new PostId(post.id),
+                new UserId(post.userId),
+                new PostTitle(post.title),
+                new PostDescription(post.description),
+                new PostDate(post.date),
                 new PostImage(post.image)
             ))
     }

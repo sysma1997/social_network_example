@@ -1,5 +1,5 @@
 .newPost {
-    background: whitesmoke;
+    background-color: whitesmoke;
     border: 1px solid rgb(226, 226, 226);
     border-radius: 0.3rem;
     box-shadow: 0 0.1rem 0.3rem gray;
@@ -8,7 +8,30 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+
+    animation-name: newPost;
+    animation-duration: 0.5s;
 }
+
+@keyframes newPost {
+    from {
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        
+        padding: 0;
+    }
+    to {
+        background-color: whitesmoke;
+        border: 1px solid rgb(226, 226, 226);
+        border-radius: 0.3rem;
+        box-shadow: 0 0.1rem 0.3rem gray;
+
+        padding: 1rem;
+    }
+}
+
 .newPostFile {
     color: gray;
     border: 1px solid rgba(128, 128, 128, 0.3);
@@ -45,4 +68,18 @@
 }
 .newPostDescription:focus {
     outline: none;
+}
+.newPostButtons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.newPostButtons button {
+    margin: 0 0.3rem;
+
+    flex: 1;
+}
+
+.newPostShowPublish {
+    width: 100%;
 }

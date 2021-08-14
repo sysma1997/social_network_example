@@ -17,6 +17,7 @@ interface Props {
 export const Posts = (props: Props) => {
     const { userId } = props
 
+    const [isPublish, setIsPublish] = useState<boolean>(false)
     const [image, setImage] = useState<File | null>()
     const [preview, setPreview] = useState<string | null>()
     const [title, setTitle] = useState<string>("")
@@ -27,6 +28,21 @@ export const Posts = (props: Props) => {
     const [descriptionError, setDescriptionError] = useState<string>("")
     const [messageError, setMessageError] = useState<string>("")
 
+    const [posts, setPosts] = useState<Array<Post> | null>(null)
+
+    useEffect(() => {
+        Http.Init("GET", "post/myposts", null, response => {
+            if (response.status !== 200) {
+                alert(response.result)
+                return
+            }
+
+            const list: Array<any> = JSON.parse(response.result)
+            const posts: Array<Post> = []
+            list.map(item => posts.push(new Post(JSON.stringify(item))))
+            setPosts(posts.concat())
+        })
+    }, [posts])
     useEffect(() => {
         if (!image) {
             setPreview(null)
@@ -84,11 +100,12 @@ export const Posts = (props: Props) => {
             setImage(null)
             setTitle("")
             setDescription("")
+            setIsPublish(false)
         })
     }
 
     return <div>
-        <div className={styles.newPost}>
+        {(isPublish) && <div className={styles.newPost}>
             <label className={styles.newPostTitle}>Publish post</label>
             <label className={styles.newPostFile}>
                 <input type="file" accept="image/*" onChange={changeImage} />
@@ -111,7 +128,23 @@ export const Posts = (props: Props) => {
             <label style={{ ...setErrorStyle, textAlign: "center" }}>
                 <b dangerouslySetInnerHTML={{ __html: messageError }}></b>
             </label>
-            <Button onClick={publish}>Publish</Button>
+            <div className={styles.newPostButtons}>
+                <Button onClick={() => setIsPublish(false)}>Cancel</Button>
+                <Button onClick={publish}>Publish</Button>
+            </div>
+        </div> || <Button className={styles.newPostShowPublish}
+            onClick={() => setIsPublish(true)}>
+                Publish post
+            </Button>}
+        <div>
+            {(posts) && (posts.length > 0) && posts.map(post => <div key={post.id}>
+                <small>{post.date}</small>
+                <label>{post.title}</label>
+                <p>{post.description}</p>
+                {(post.image) && <img
+                    src={`${process.env.API}${post.image.replace("public/", "")}`}
+                    alt={post.image} />}
+            </div>)}
         </div>
     </div>
 }

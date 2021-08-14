@@ -1,5 +1,5 @@
 .button {
-    background: var(--color-primary);
+    background-color: var(--color-primary);
     color: white;
     font-size: 1em;
 
@@ -10,7 +10,7 @@
     margin: 1rem 0;
 }
 .button:hover {
-    background: var(--color-secondary);
+    background-color: var(--color-secondary);
     cursor: pointer;
     animation-name: animation;
     animation-duration: 0.3s;
@@ -18,9 +18,9 @@
 
 @keyframes animation {
     from {
-        background: var(--color-primary);
+        background-color: var(--color-primary);
     }
     to {
-        background:var(--color-secondary);
+        background-color:var(--color-secondary);
     }
 }
