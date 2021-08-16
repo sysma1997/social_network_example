@@ -5,8 +5,8 @@ import { faBars, faBell, faSearch, faSignOutAlt, faUser } from "@fortawesome/fre
 import { User } from '../../../user/domain/User'
 import styles from './Navbar.module.css'
 
-import { Input } from '../../input/Input'
 import { Button } from '../../button/Button'
+import { Search } from '../../search/Search'
 
 interface Props {
     user: User
@@ -38,7 +38,7 @@ export const Navbar = (props: Props) => {
         <div className={`${styles.navMedium} ` +
             `${(showMenuResponsive) && styles.showMenuResponsive}`}>
             <div className={styles.navSearchContent}>
-                <Input className={styles.navSearch} placeholder="Search friend..." />
+                <Search className={styles.navSearch} placeholder="Search friend..." />
                 <Button className={styles.navSearchButton}>
                     <FontAwesomeIcon icon={faSearch} />
                 </Button>

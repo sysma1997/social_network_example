@@ -54,10 +54,12 @@
     justify-content: center;
     align-items: center;
 
+    margin: 0 3rem;
+
     flex: 2;
 }
 .navSearch {
-    border-radius: 1rem 0rem 0rem 1rem;
+    border-radius: 1rem 0 0 1rem;
 
     margin: 0;
     height: 3rem;
