@@ -7,17 +7,23 @@ import styles from '../styles/Home.module.css'
 
 import { Button } from '../src/components/button/Button'
 import { Input } from '../src/components/input/Input'
-import { Http } from '../src/shared/infrastructure/Http'
 import { setErrorStyle, setError, clearError } from '../src/shared/infrastructure/ValidationInput'
+import { UserGetApiRepository } from '../src/user/infrastructure/get/UserGetApiRepository'
+import { GetUser } from '../src/user/application/get/GetUser'
+import { UserLoginApiRepository } from '../src/user/infrastructure/login/UserLoginApiRepository'
+import { LoginUser } from '../src/user/application/login/LoginUser'
 
 export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    Http.Init("GET", "user", null, response => {
-      if (response.status === 200)
-        router.push("panel")
-    })
+    (async () => {
+      const repository = new UserGetApiRepository()
+      const getUser = new GetUser(repository)
+
+      const user = await getUser.init()
+      if (user != null) router.push("panel")
+    })()
   }, [])
 
   const [username, setUsername] = useState<string>("")
@@ -46,19 +52,14 @@ export default function Home() {
     }
     clearAll()
 
-    const login = {
-      username,
-      password
-    }
-    const response = await Http.Init("POST", "user/login", JSON.stringify(login))
-    if (response.status !== 200) {
-      setMessageError(response.result)
+    const repository = new UserLoginApiRepository()
+    const login = new LoginUser(repository)
 
+    if (!await login.init(username, password)) {
+      setMessageError("Username or password invalid")
       return
     }
-    setMessageError("")
 
-    localStorage.setItem("token", response.result)
     router.push("/panel")
   }
 
@@ -100,7 +101,7 @@ export default function Home() {
           onChange={event => setPassword(event.target.value)}
           onKeyDown={keyDownLogin} />
         <small style={setErrorStyle}>{passwordError}</small>
-        <label style={{...setErrorStyle,  textAlign: "center" }}>
+        <label style={{ ...setErrorStyle, textAlign: "center" }}>
           <b>{messageError}</b>
         </label>
         <Button onClick={login}>Login</Button>

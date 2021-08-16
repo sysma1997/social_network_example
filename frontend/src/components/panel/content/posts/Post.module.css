@@ -1,20 +1,26 @@
 .newPost {
     background-color: whitesmoke;
     border: 1px solid rgb(226, 226, 226);
-    border-radius: 0.3rem;
+    border-radius: 0.1rem;
     box-shadow: 0 0.1rem 0.3rem gray;
 
-    width: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
     padding: 1rem;
 
     animation-name: newPost;
-    animation-duration: 0.5s;
+    animation-duration: 1s;
 }
 
 @keyframes newPost {
-    from {
+    0% {
+        height: 0;
+    }
+    60% {
+        height: 25rem;
+    }
+    61% {
         background-color: transparent;
         border: none;
         border-radius: 0;
@@ -22,13 +28,28 @@
         
         padding: 0;
     }
-    to {
+    100% {
         background-color: whitesmoke;
         border: 1px solid rgb(226, 226, 226);
-        border-radius: 0.3rem;
+        border-radius: 0.1rem;
         box-shadow: 0 0.1rem 0.3rem gray;
 
         padding: 1rem;
+    }
+}
+
+.newPost > * {
+    visibility: hidden;
+
+    animation-name: newPostElements;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes newPostElements {
+    to {
+        visibility: visible;
     }
 }
 
@@ -81,5 +102,112 @@
 }
 
 .newPostShowPublish {
+    margin-bottom: 0;
     width: 100%;
+}
+
+.separator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 1.5rem 0;
+}
+.separator hr {
+    background-color: rgba(124, 124, 124, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+.separator label {
+    color: rgba(124, 124, 124, 0.5);
+    font-size: 1.5rem;
+
+    margin: 0 1rem;
+}
+
+.list {
+    margin-top: 1rem;
+}
+.item {
+    background-color: whitesmoke;
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 0.1rem;
+    box-shadow: 0 0.1rem 0.3rem gray;
+
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.itemHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.itemHeaderUserImage {
+    border-radius: 50%;
+    cursor: pointer;
+
+    margin-right: 1rem;
+    width: 40px;
+    height: 40px;
+}
+.itemHeaderUserInitial {
+    background-color: var(--color-secondary);
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 1rem;
+    width: 40px;
+    height: 40px;
+}
+.itemHeaderInformation {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+.itemHeaderInformationName {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.itemHeaderInformationDate {
+    color: gray;
+}
+.itemTitle {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.itemImage {
+    width: 100%;
+}
+.itemInteractions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem 0;
+}
+.itemInteractions label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
+}
+.itemInteraction {
+    font-size: 2rem;
+    margin-right: 1rem;
 }

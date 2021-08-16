@@ -56,7 +56,7 @@ export const Friends = () => {
                 </Button>
             </div>
         </div> || <Button className={styles.showFriends} onClick={changeShowFriends}>
-                <FontAwesomeIcon icon={faCommentAlt} size="2x" />
+                <FontAwesomeIcon icon={faCommentAlt} style={{ fontSize: 25 }} />
             </Button>}
     </>
 }

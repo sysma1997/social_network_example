@@ -1,6 +1,14 @@
 import { ChangeEvent, useState, useEffect, KeyboardEvent } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUpload } from "@fortawesome/free-solid-svg-icons"
+import {
+    faEllipsisV,
+    faUpload
+} from "@fortawesome/free-solid-svg-icons"
+import {
+    faHeart as farHeart,
+    faCommentDots as farCommentDots,
+    faNewspaper
+} from '@fortawesome/free-regular-svg-icons'
 import styles from "./Post.module.css"
 
 import { Button } from "../../../button/Button"
@@ -9,13 +17,14 @@ import { setErrorStyle, setError, clearError } from "../../../../shared/infrastr
 import { UuidValue } from "../../../../shared/domain/UuidValue"
 import { Post } from "../../../../post/domain/Post"
 import { Http } from "../../../../shared/infrastructure/Http"
+import { User } from "../../../../user/domain/User"
 
 interface Props {
-    userId: string
+    user: User
 }
 
 export const Posts = (props: Props) => {
-    const { userId } = props
+    const { user } = props
 
     const [isPublish, setIsPublish] = useState<boolean>(false)
     const [image, setImage] = useState<File | null>()
@@ -42,7 +51,7 @@ export const Posts = (props: Props) => {
             list.map(item => posts.push(new Post(JSON.stringify(item))))
             setPosts(posts.concat())
         })
-    }, [posts])
+    }, [!posts])
     useEffect(() => {
         if (!image) {
             setPreview(null)
@@ -83,8 +92,8 @@ export const Posts = (props: Props) => {
         clearAll()
 
         const form = new FormData()
-        form.append("id", UuidValue.Generate().value)
-        form.append("userId", userId)
+        form.append("id", post.id.value)
+        form.append("userId", post.userId.value)
         form.append("title", title)
         form.append("description", description)
         form.append("image", image!)
@@ -96,6 +105,10 @@ export const Posts = (props: Props) => {
                 return
             }
             setMessageError("")
+
+            const copyPosts = posts!.concat()
+            copyPosts.unshift(post)
+            setPosts(copyPosts)
 
             setImage(null)
             setTitle("")
@@ -136,14 +149,51 @@ export const Posts = (props: Props) => {
             onClick={() => setIsPublish(true)}>
                 Publish post
             </Button>}
-        <div>
-            {(posts) && (posts.length > 0) && posts.map(post => <div key={post.id}>
-                <small>{post.date}</small>
-                <label>{post.title}</label>
-                <p>{post.description}</p>
-                {(post.image) && <img
-                    src={`${process.env.API}${post.image.replace("public/", "")}`}
+
+        <div className={styles.separator}>
+            <hr />
+            <label><FontAwesomeIcon icon={faNewspaper} /></label>
+            <hr />
+        </div>
+
+        <div className={styles.list}>
+            {(posts) && (posts.length > 0) && posts.map(post => <div key={post.id.value}
+                className={styles.item}>
+                <div className={styles.itemHeader}>
+                    {(post.user!.image) &&
+                        <img className={styles.itemHeaderUserImage}
+                            src={`${process.env.API}${post.user!.image}`}
+                            alt={post.user!.name} /> ||
+                        <label className={styles.itemHeaderUserInitial}>
+                            {post.user!.name[0].toUpperCase()}
+                        </label>}
+                    <div className={styles.itemHeaderInformation}>
+                        <a className={styles.itemHeaderInformationName} href="#">
+                            {post.user!.name}
+                        </a>
+                        <small className={styles.itemHeaderInformationDate}>
+                            {post.date}
+                        </small>
+                    </div>
+                    <Button>
+                        <FontAwesomeIcon icon={faEllipsisV} />
+                    </Button>
+                </div>
+                <label className={styles.itemTitle}>{post.title}</label>
+                <p >{post.description}</p>
+                {(post.image) && <img className={styles.itemImage}
+                    src={`${process.env.API}${post.image}`}
                     alt={post.image} />}
+                <div className={styles.itemInteractions}>
+                    <label>
+                        <FontAwesomeIcon className={styles.itemInteraction} icon={farHeart} />
+                        {0}
+                    </label>
+                    <label>
+                        <FontAwesomeIcon className={styles.itemInteraction} icon={farCommentDots} />
+                        {0}
+                    </label>
+                </div>
             </div>)}
         </div>
     </div>

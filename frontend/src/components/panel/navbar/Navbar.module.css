@@ -14,9 +14,6 @@
     width: 100%;
     padding: 0.5rem 0.5rem 0.8rem 0.5rem;
 }
-.navColumn {
-    flex: 1
-}
 
 .navbarMenuResponsive {
     display: none;
@@ -25,6 +22,11 @@
     display: flex !important;
 }
 
+.navbarTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .navSysma {
     color: white;
     font-size: 1.5rem;
@@ -118,6 +120,9 @@
         justify-content: space-between;
         flex-wrap: wrap;
     }
+    .navbarTitle {
+        width: 100%;
+    }
     .navbarMenuResponsive {
         display: block;
         font-size: 1.5rem;
@@ -130,6 +135,17 @@
     .navMedium {
         display: none;
         flex-direction: column-reverse;
+
+        animation-name: navMedium;
+        animation-duration: 0.5s;
+    }
+    @keyframes navMedium {
+        from {
+            height: 0;
+        }
+        to {
+            height: 10rem;
+        }
     }
     .navEnd {
         display: flex;

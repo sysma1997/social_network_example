@@ -9,11 +9,23 @@ import { Http } from "../../src/shared/infrastructure/Http"
 import { Navbar } from "../../src/components/panel/navbar/Navbar"
 import { PanelContent } from "../../src/components/panel/PanelContent"
 import { Friends } from "../../src/components/panel/friends/Friends"
+import { UuidValue } from "../../src/shared/domain/UuidValue"
+import { EmailValue } from "../../src/shared/domain/EmailValue"
 
 export default function Panel() {
     const router = useRouter()
 
-    const [user, setUser] = useState<User>(new User())
+    const [user, setUser] = useState<User>(new User(
+        UuidValue.Generate(),
+        "",
+        new Date(),
+        false,
+        new EmailValue("noEmail@email.com"),
+        "",
+        "",
+        false,
+        null
+    ))
 
     useEffect(() => {
         Http.Init("GET", "user", null, response => {
@@ -22,7 +34,7 @@ export default function Panel() {
 
             setUser(new User(response.result))
         })
-    }, [user.id != ""])
+    }, [user.id.value != ""])
 
     return <>
         <Head>

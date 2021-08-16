@@ -20,15 +20,15 @@ export class UserUpdateImageController {
         this.router.put("/updateimage", UploadSingle.single("image"), async (req, res) => {
             const imageFile = req.file
 
-            if(!imageFile) {
+            if (!imageFile) {
                 res.status(400).send("Image is required.")
                 return
             }
-            if (imageFile.mimetype !== "image/jpg" && 
-                imageFile.mimetype !== "image/jpeg" && 
-                imageFile.mimetype !== "image/png" && 
+            if (imageFile.mimetype !== "image/jpg" &&
+                imageFile.mimetype !== "image/jpeg" &&
+                imageFile.mimetype !== "image/png" &&
                 imageFile.mimetype !== "image/gif") {
-                res.status(400).send("File is not imagen valid. " + 
+                res.status(400).send("File is not imagen valid. " +
                     "Only types valid (JPEG, PNG, GIF)")
                 return
             }
@@ -42,40 +42,41 @@ export class UserUpdateImageController {
             let image: string | null = null
             try {
                 image = await getImage.init(res.locals.userId)
-            } catch(error: any) {
+            } catch (error: any) {
                 connection.close()
                 res.status(400).send(error.toString())
                 return
             }
 
-            if(image) {
+            if (image) {
                 try {
                     fs.unlinkSync(`.${image}`)
-                } catch(error: any) {
+                } catch (error: any) {
                     connection.close()
                     res.status(400).send(error.toString())
                 }
             }
 
             const folder = `/public/assets/images/${res.locals.userId}/profile`
-            if(!fs.existsSync(`.${folder}`)) 
+            if (!fs.existsSync(`.${folder}`))
                 fs.mkdirSync(`.${folder}`, { recursive: true })
-            
+
             image = `${folder}/${imageFile.originalname}`
             try {
                 fs.writeFileSync(`.${image}`, imageFile.buffer)
-            } catch(error: any) {
+            } catch (error: any) {
                 connection.close()
                 res.status(400).send(error.toString())
                 return
             }
+            image = image.replace("public/", "")
 
             const updateImageRepository = new UserUpdateImageTypeormRepository(connection)
             const updateImage = new UpdateImage(updateImageRepository)
 
             try {
                 await updateImage.init(res.locals.userId, image)
-            } catch(error: any) {
+            } catch (error: any) {
                 connection.close()
                 res.status(400).send(error.toString())
                 return

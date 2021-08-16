@@ -5,13 +5,13 @@ import { Posts } from "./content/posts/Post"
 import { User } from "../../user/domain/User"
 
 interface Props {
-    user: User, 
+    user: User,
     content?: string
 }
 
 export const PanelContent = (props: Props) => {
 
     return <div className={styles.panel}>
-        <Posts userId={props.user.id} />
+        <Posts user={props.user} />
     </div>
 }

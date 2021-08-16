@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons"
 import { User } from '../../../user/domain/User'
 import styles from './Navbar.module.css'
 
@@ -28,14 +28,14 @@ export const Navbar = (props: Props) => {
     }
 
     return <nav className={styles.navbar}>
-        <div>
+        <div className={styles.navbarTitle}>
             <label className={styles.navSysma}>SYSMA</label>
-        </div>
-        <div>
             <Button className={styles.navbarMenuResponsive}
-                onClick={onClickShowMenuResponsive}>⁝</Button>
+                onClick={onClickShowMenuResponsive}>
+                <FontAwesomeIcon icon={faBars} />
+            </Button>
         </div>
-        <div className={`${styles.navColumn} ${styles.navMedium} ` +
+        <div className={`${styles.navMedium} ` +
             `${(showMenuResponsive) && styles.showMenuResponsive}`}>
             <div className={styles.navSearchContent}>
                 <Input className={styles.navSearch} placeholder="Search..." />
