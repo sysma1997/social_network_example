@@ -4,13 +4,13 @@ import Head from "next/head"
 
 import { User } from "../../src/user/domain/User"
 
-import { Http } from "../../src/shared/infrastructure/Http"
-
 import { Navbar } from "../../src/components/panel/navbar/Navbar"
 import { PanelContent } from "../../src/components/panel/PanelContent"
 import { Friends } from "../../src/components/panel/friends/Friends"
 import { UuidValue } from "../../src/shared/domain/UuidValue"
 import { EmailValue } from "../../src/shared/domain/EmailValue"
+import { UserGetApiRepository } from "../../src/user/infrastructure/get/UserGetApiRepository"
+import { GetUser } from "../../src/user/application/get/GetUser"
 
 export default function Panel() {
     const router = useRouter()
@@ -28,13 +28,15 @@ export default function Panel() {
     ))
 
     useEffect(() => {
-        Http.Init("GET", "user", null, response => {
-            if (response.status !== 200)
-                router.push("/")
+        (async () => {
+            const repository = new UserGetApiRepository()
+            const getUser = new GetUser(repository)
 
-            setUser(new User(response.result))
-        })
-    }, [user.id.value != ""])
+            const userValid = await getUser.init()
+            if (userValid) setUser(userValid)
+            else router.push("/login")
+        })()
+    }, [user.name != ""])
 
     return <>
         <Head>

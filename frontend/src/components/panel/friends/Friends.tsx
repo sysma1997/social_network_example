@@ -7,35 +7,45 @@ import { UuidValue } from "../../../shared/domain/UuidValue"
 import { User } from "../../../user/domain/User"
 import { Input } from "../../input/Input"
 import { Button } from "../../button/Button"
+import { EmailValue } from "../../../shared/domain/EmailValue"
 
 export const Friends = () => {
     const [showFriends, setShowFriends] = useState<boolean>(false)
 
     const friends: Array<User> = [
-        new User(JSON.stringify({
-            id: UuidValue.Generate().value,
-            name: "Stiven Moreno Acero"
-        })),
-        new User(JSON.stringify({
-            id: UuidValue.Generate().value,
-            name: "Nilsa Acero Acosta"
-        })),
-        new User(JSON.stringify({
-            id: UuidValue.Generate().value,
-            name: "Aldemar Moreno Ramirez"
-        })),
-        new User(JSON.stringify({
-            id: UuidValue.Generate().value,
-            name: "Santiago Barbosa"
-        })),
-        new User(JSON.stringify({
-            id: UuidValue.Generate().value,
-            name: "Juan Pablo Roldan"
-        })),
-        new User(JSON.stringify({
-            id: UuidValue.Generate().value,
-            name: "Un Nombre Muy Largo, Tan largo que molesta en la programacion."
-        }))
+        new User(
+            UuidValue.Generate(),
+            "Stiven Moreno Acero",
+            new Date(),
+            false,
+            new EmailValue("siventma@hotmail.com"),
+            "siventMa",
+            "",
+            true,
+            null
+        ),
+        new User(
+            UuidValue.Generate(),
+            "Nilsa Acero Acosta",
+            new Date(),
+            false,
+            new EmailValue("nilsacero@hotmail.com"),
+            "nacero",
+            "",
+            true,
+            null
+        ),
+        new User(
+            UuidValue.Generate(),
+            "Aldemar Moreno Ramirez",
+            new Date(),
+            false,
+            new EmailValue("aldemarmoreno@hotmail.com"),
+            "alderio",
+            "",
+            true,
+            null
+        ),
     ]
 
     const changeShowFriends = () => setShowFriends(!showFriends)
@@ -44,7 +54,7 @@ export const Friends = () => {
         {(showFriends) && <div className={styles.friends}>
             <div className={styles.friendsContent}>
                 {(friends.length > 0) && <ul className={styles.list}>
-                    {friends.map(user => <li key={user.id}><a href="#">
+                    {friends.map(user => <li key={user.id.value}><a href="#">
                         <div></div>
                         <label>{user.name}</label>
                     </a></li>)}

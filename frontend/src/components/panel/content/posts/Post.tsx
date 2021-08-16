@@ -18,6 +18,10 @@ import { UuidValue } from "../../../../shared/domain/UuidValue"
 import { Post } from "../../../../post/domain/Post"
 import { Http } from "../../../../shared/infrastructure/Http"
 import { User } from "../../../../user/domain/User"
+import { GetMyPostsApiRepository } from "../../../../post/infrastructure/getMyPosts/GetMyPostsApiRepository"
+import { GetMyPosts } from "../../../../post/application/getMyPosts/GetMyPosts"
+import { PostPublishApiRepository } from "../../../../post/infrastructure/publish/PostPublishApiRepository"
+import { PublishPost } from "../../../../post/application/publish/PublishPost"
 
 interface Props {
     user: User
@@ -37,21 +41,11 @@ export const Posts = (props: Props) => {
     const [descriptionError, setDescriptionError] = useState<string>("")
     const [messageError, setMessageError] = useState<string>("")
 
-    const [posts, setPosts] = useState<Array<Post> | null>(null)
+    const [posts, setPosts] = useState<Array<Post>>(new Array<Post>())
 
     useEffect(() => {
-        Http.Init("GET", "post/myposts", null, response => {
-            if (response.status !== 200) {
-                alert(response.result)
-                return
-            }
-
-            const list: Array<any> = JSON.parse(response.result)
-            const posts: Array<Post> = []
-            list.map(item => posts.push(new Post(JSON.stringify(item))))
-            setPosts(posts.concat())
-        })
-    }, [!posts])
+        loadPosts()
+    }, [])
     useEffect(() => {
         if (!image) {
             setPreview(null)
@@ -63,6 +57,17 @@ export const Posts = (props: Props) => {
 
         return () => URL.revokeObjectURL(objectUrl)
     }, [image])
+
+    const loadPosts = async () => {
+        const repository = new GetMyPostsApiRepository()
+        const getMyPosts = new GetMyPosts(repository)
+
+        try {
+            setPosts(await getMyPosts.init())
+        } catch (error: any) {
+            alert(error.toString())
+        }
+    }
 
     const changeImage = (event: ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files) {
@@ -76,7 +81,7 @@ export const Posts = (props: Props) => {
     const keyDownPublish = (event: KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === "Enter") publish()
     }
-    const publish = () => {
+    const publish = async () => {
         const clearAll = () => {
             clearError(setTitleBorder, setTitleError)
             clearError(setDescriptionBorder, setDescriptionError)
@@ -91,30 +96,54 @@ export const Posts = (props: Props) => {
         }
         clearAll()
 
-        const form = new FormData()
-        form.append("id", post.id.value)
-        form.append("userId", post.userId.value)
-        form.append("title", title)
-        form.append("description", description)
-        form.append("image", image!)
-        form.append("date", new Date().toString())
+        let post = new Post(
+            UuidValue.Generate(),
+            user.id,
+            title,
+            description,
+            new Date(),
+            null,
+            user
+        )
 
-        Http.Init("POST", "post", form, response => {
-            if (response.status !== 201) {
-                setMessageError(response.result)
-                return
+        const repository = new PostPublishApiRepository()
+        const publish = new PublishPost(repository)
+
+        try {
+            if (await publish.init(
+                post.id,
+                user.id,
+                title,
+                description,
+                new Date(),
+                image!
+            )) {
+                if (image) {
+                    const objectUrl = URL.createObjectURL(image)
+                    post = new Post(
+                        post.id,
+                        user.id,
+                        title,
+                        description,
+                        post.date,
+                        objectUrl,
+                        user
+                    )
+                    URL.revokeObjectURL(objectUrl)
+                }
+
+                const newPost = posts.concat()
+                newPost.unshift(post)
+                setPosts(newPost)
+
+                setImage(null)
+                setTitle("")
+                setDescription("")
+                setIsPublish(false)
             }
-            setMessageError("")
-
-            const copyPosts = posts!.concat()
-            copyPosts.unshift(post)
-            setPosts(copyPosts)
-
-            setImage(null)
-            setTitle("")
-            setDescription("")
-            setIsPublish(false)
-        })
+        } catch (error: any) {
+            setMessageError(error.toString())
+        }
     }
 
     return <div>
@@ -172,7 +201,9 @@ export const Posts = (props: Props) => {
                             {post.user!.name}
                         </a>
                         <small className={styles.itemHeaderInformationDate}>
-                            {post.date}
+                            {post.date.toLocaleDateString()}
+                            {' '}
+                            {post.date.toLocaleTimeString()}
                         </small>
                     </div>
                     <Button>

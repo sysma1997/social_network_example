@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faBell, faSearch, faSignOutAlt, faUser } from "@fortawesome/free-solid-svg-icons"
 import { User } from '../../../user/domain/User'
 import styles from './Navbar.module.css'
 
@@ -20,7 +20,7 @@ export const Navbar = (props: Props) => {
 
     const signOut = () => {
         localStorage.removeItem("token")
-        router.push("/")
+        router.push("/login")
     }
 
     const onClickShowMenuResponsive = () => {
@@ -38,14 +38,27 @@ export const Navbar = (props: Props) => {
         <div className={`${styles.navMedium} ` +
             `${(showMenuResponsive) && styles.showMenuResponsive}`}>
             <div className={styles.navSearchContent}>
-                <Input className={styles.navSearch} placeholder="Search..." />
+                <Input className={styles.navSearch} placeholder="Search friend..." />
                 <Button className={styles.navSearchButton}>
                     <FontAwesomeIcon icon={faSearch} />
                 </Button>
             </div>
             <div className={styles.navEnd}>
-                <label className={styles.navEndItem}>{user.username.toUpperCase()}</label>
-                <label className={styles.navEndItem} onClick={signOut}>Sign out</label>
+                <label className={styles.navEndItem}>
+                    <FontAwesomeIcon icon={faUser} />
+                    {' '}
+                    {user.username.toUpperCase()}
+                </label>
+                <label className={styles.navEndItem}>
+                    <FontAwesomeIcon icon={faBell} />
+                    {' '}
+                    NOTIFICATIONS
+                </label>
+                <label className={styles.navEndItem} onClick={signOut}>
+                    <FontAwesomeIcon icon={faSignOutAlt} />
+                    {' '}
+                    SIGN OUT
+                </label>
             </div>
         </div>
     </nav>

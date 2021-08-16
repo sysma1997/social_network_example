@@ -11,15 +11,23 @@ import { EmailValue } from '../src/shared/domain/EmailValue'
 import { UuidValue } from '../src/shared/domain/UuidValue'
 import { Http } from '../src/shared/infrastructure/Http'
 import { setErrorStyle, setError, clearError } from '../src/shared/infrastructure/ValidationInput'
+import { UserGetApiRepository } from '../src/user/infrastructure/get/UserGetApiRepository'
+import { GetUser } from '../src/user/application/get/GetUser'
+import { User } from '../src/user/domain/User'
+import { UserRegisterApiRepository } from '../src/user/infrastructure/register/UserRegisterApiRepository'
+import { RegisterUser } from '../src/user/application/register/RegisterUser'
 
 export default function Register() {
     const router = useRouter()
 
     useEffect(() => {
-        Http.Init("GET", "user", null, response => {
-            if (response.status === 200)
-                router.push("panel")
-        })
+        (async () => {
+            const repository = new UserGetApiRepository()
+            const getUser = new GetUser(repository)
+
+            const user = await getUser.init()
+            if (user != null) router.push("panel")
+        })()
     }, [])
 
     const [name, setName] = useState<string>("")
@@ -92,25 +100,27 @@ export default function Register() {
         }
         clearAll()
 
-        const user = {
-            id: UuidValue.Generate().value.toString(),
+        const user = new User(
+            UuidValue.Generate(),
             name,
-            birthday,
+            new Date(birthday),
             gender,
-            email,
+            new EmailValue(email),
             username,
-            password
+            password,
+            false,
+            null
+        )
+
+        const repository = new UserRegisterApiRepository()
+        const register = new RegisterUser(repository)
+
+        setMessageError("")
+        try {
+            setRegisterSuccess(await register.init(user))
+        } catch (error: any) {
+            setMessageError(error.toString())
         }
-
-        Http.Init("POST", "user", JSON.stringify(user), response => {
-            if (response.status !== 201) {
-                setMessageError(response.result)
-
-                return
-            }
-            setMessageError("")
-            setRegisterSuccess(true)
-        })
     }
 
     return <>
@@ -178,7 +188,7 @@ export default function Register() {
                     value={repeatPassword} onChange={event => setRepeatPassword(event.target.value)}
                     onKeyDown={keyDownRegister} />
                 <small style={setErrorStyle}>{repeatPasswordError}</small>
-                <label style={{...setErrorStyle,  textAlign: "center" }}>
+                <label style={{ ...setErrorStyle, textAlign: "center" }}>
                     <b>{messageError}</b>
                 </label>
                 <Button onClick={register}>Register</Button>
