@@ -12,6 +12,7 @@ import {
 import styles from "./Post.module.css"
 
 import { Button } from "../../../button/Button"
+import { ImageProfile } from "../../../imageProfile/ImageProfile"
 import { Input } from "../../../input/Input"
 import { setErrorStyle, setError, clearError } from "../../../../shared/infrastructure/ValidationInput"
 import { UuidValue } from "../../../../shared/domain/UuidValue"
@@ -119,17 +120,15 @@ export const Posts = (props: Props) => {
                 image!
             )) {
                 if (image) {
-                    const objectUrl = URL.createObjectURL(image)
                     post = new Post(
                         post.id,
                         user.id,
                         title,
                         description,
-                        post.date,
-                        objectUrl,
+                        post.date, 
+                        `${process.env.API}/assets/images/${user.id.value}/posts/${image.name}`, 
                         user
                     )
-                    URL.revokeObjectURL(objectUrl)
                 }
 
                 const newPost = posts.concat()
@@ -189,13 +188,7 @@ export const Posts = (props: Props) => {
             {(posts) && (posts.length > 0) && posts.map(post => <div key={post.id.value}
                 className={styles.item}>
                 <div className={styles.itemHeader}>
-                    {(post.user!.image) &&
-                        <img className={styles.itemHeaderUserImage}
-                            src={`${process.env.API}${post.user!.image}`}
-                            alt={post.user!.name} /> ||
-                        <label className={styles.itemHeaderUserInitial}>
-                            {post.user!.name[0].toUpperCase()}
-                        </label>}
+                    <ImageProfile user={post.user} className={styles.itemImageProfile} />
                     <div className={styles.itemHeaderInformation}>
                         <a className={styles.itemHeaderInformationName} href="#">
                             {post.user!.name}

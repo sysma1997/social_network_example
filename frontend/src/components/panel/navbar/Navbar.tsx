@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faBell, faSearch, faSignOutAlt, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faSearch, faUser, faBell, faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
 import { User } from '../../../user/domain/User'
 import styles from './Navbar.module.css'
 
@@ -29,7 +30,9 @@ export const Navbar = (props: Props) => {
 
     return <nav className={styles.navbar}>
         <div className={styles.navbarTitle}>
-            <label className={styles.navSysma}>SYSMA</label>
+            <Link href="/panel/home">
+                <label className={styles.navSysma}>SYSMA</label>
+            </Link>
             <Button className={styles.navbarMenuResponsive}
                 onClick={onClickShowMenuResponsive}>
                 <FontAwesomeIcon icon={faBars} />
@@ -44,11 +47,13 @@ export const Navbar = (props: Props) => {
                 </Button>
             </div>
             <div className={styles.navEnd}>
-                <label className={styles.navEndItem}>
-                    <FontAwesomeIcon icon={faUser} />
-                    {' '}
-                    {user.username.toUpperCase()}
-                </label>
+                <Link href="/panel/profile">
+                    <label className={styles.navEndItem}>
+                        <FontAwesomeIcon icon={faUser} />
+                        {' '}
+                        {user.username.toUpperCase()}
+                    </label>
+                </Link>
                 <label className={styles.navEndItem}>
                     <FontAwesomeIcon icon={faBell} />
                     {' '}

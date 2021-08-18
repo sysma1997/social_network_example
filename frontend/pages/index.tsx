@@ -22,7 +22,7 @@ export default function Home() {
       const getUser = new GetUser(repository)
 
       const user = await getUser.init()
-      if (user != null) router.push("panel")
+      if (user != null) router.push("panel/login")
     })()
   }, [])
 
@@ -60,7 +60,7 @@ export default function Home() {
       return
     }
 
-    router.push("/panel")
+    router.push("panel/home")
   }
 
   return <>

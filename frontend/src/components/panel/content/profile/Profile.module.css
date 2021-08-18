@@ -1,0 +1,23 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 3rem;
+}
+
+.imageProfile {
+    border: 0.5rem solid var(--color-primary);
+    font-size: 4rem;
+
+    width: 10rem;
+    height: 10rem;
+}
+.name {
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    font-weight: bold;
+
+    margin-top: 1rem;
+}

@@ -14,6 +14,7 @@ import { GetUser } from "../../src/user/application/get/GetUser"
 
 export default function Panel() {
     const router = useRouter()
+    const { content } = router.query
 
     const [user, setUser] = useState<User>(new User(
         UuidValue.Generate(),
@@ -47,7 +48,7 @@ export default function Panel() {
 
         <main>
             <Navbar user={user} />
-            <PanelContent user={user} />
+            <PanelContent user={user} content={content} />
             <Friends />
         </main>
     </>

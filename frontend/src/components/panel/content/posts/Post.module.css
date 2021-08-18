@@ -147,27 +147,7 @@
     flex-direction: row;
     align-items: center;
 }
-.itemHeaderUserImage {
-    border-radius: 50%;
-    cursor: pointer;
-
-    margin-right: 1rem;
-    width: 40px;
-    height: 40px;
-}
-.itemHeaderUserInitial {
-    background-color: var(--color-secondary);
-    color: white;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-right: 1rem;
+.itemImageProfile {
     width: 40px;
     height: 40px;
 }

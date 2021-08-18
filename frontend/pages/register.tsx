@@ -26,7 +26,7 @@ export default function Register() {
             const getUser = new GetUser(repository)
 
             const user = await getUser.init()
-            if (user != null) router.push("panel")
+            if (user != null) router.push("panel/home")
         })()
     }, [])
 
