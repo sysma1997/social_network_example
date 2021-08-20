@@ -1,3 +1,5 @@
+import dayjs from "dayjs"
+
 import { EmailValue } from "../../../shared/domain/EmailValue";
 import { UuidValue } from "../../../shared/domain/UuidValue";
 import { Http } from "../../../shared/infrastructure/Http";
@@ -13,7 +15,7 @@ export class UserGetApiRepository implements UserGetRepository {
         return new User(
             new UuidValue(json.id),
             json.name,
-            new Date(json.date),
+            dayjs(json.birthday, "YYYY-MM-DD").toDate(),
             json.gender,
             new EmailValue(json.email),
             json.username,

@@ -1,23 +1,94 @@
-.profile {
+.header {
+    background: linear-gradient(180deg, gray 0%, 
+        rgba(128, 128, 128, 0.6) 10%, 
+        transparent 40%);
+    background-attachment: fixed;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    margin-top: 3rem;
+    width: 100%;
+    padding-top: 5em;
+    padding-bottom: 1rem;
 }
-
-.imageProfile {
+.headerImage {
+    position: relative;
+}
+.headerImage input[type="file"] {
+    display: none;
+}
+.headerImageProfile {
     border: 0.5rem solid var(--color-primary);
     font-size: 4rem;
 
     width: 10rem;
     height: 10rem;
 }
-.name {
+.headerImageProfileEdit {
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 3.5rem;
+    border-radius: 50%;
+
+    position: absolute;
+    right: 1rem;
+    bottom: 0;
+    padding: 1rem;
+}
+.headerImageProfileEdit:hover {
+    cursor: pointer;
+}
+.headerUsername {
     color: var(--color-primary);
     font-size: 2.5rem;
     font-weight: bold;
 
     margin-top: 1rem;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.bodyInformation {
+    margin-top: 2rem;
+
+    flex: 1;
+}
+.bodyInformationCard {
+    background-color: whitesmoke;
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 0.1rem;
+    box-shadow: 0 0.1rem 0.3rem gray;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 1rem;
+}
+.bodyInformationCardTitle {
+    color: var(--color-primary);
+    font-size: 1.6rem;
+    font-weight: bold;
+
+    margin-bottom: 1rem;
+}
+.bodyInformationCardText {
+    color: gray;
+    font-size: 1.3rem;
+
+    margin-top: 0.5rem;
+}
+.bodyInformationCardIcon {
+    color: var(--color-primary);
+    
+    margin: 0 1.3rem;
+}
+.bodyPosts {
+    margin: 1rem;
+
+    flex: 2;
 }

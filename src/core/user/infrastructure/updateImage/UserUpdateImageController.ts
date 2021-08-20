@@ -41,7 +41,7 @@ export class UserUpdateImageController {
 
             let image: string | null = null
             try {
-                image = await getImage.init(res.locals.userId)
+                image = `/public${await getImage.init(res.locals.userId)}`
             } catch (error: any) {
                 connection.close()
                 res.status(400).send(error.toString())
@@ -54,6 +54,7 @@ export class UserUpdateImageController {
                 } catch (error: any) {
                     connection.close()
                     res.status(400).send(error.toString())
+                    return
                 }
             }
 

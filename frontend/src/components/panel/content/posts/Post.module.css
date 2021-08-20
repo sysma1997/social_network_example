@@ -1,3 +1,7 @@
+.posts {
+    margin-top: 1rem;
+}
+
 .newPost {
     background-color: whitesmoke;
     border: 1px solid rgb(226, 226, 226);

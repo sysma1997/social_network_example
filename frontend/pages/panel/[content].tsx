@@ -48,7 +48,7 @@ export default function Panel() {
 
         <main>
             <Navbar user={user} />
-            <PanelContent user={user} content={content} />
+            <PanelContent user={user} setUser={setUser} content={content} />
             <Friends />
         </main>
     </>

@@ -1,7 +1,8 @@
-import { useState, useEffect, KeyboardEvent } from 'react'
+import { useState, useEffect, KeyboardEvent, ChangeEvent } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
+import dayjs from 'dayjs'
 import stylesForm from '../styles/Form.module.css'
 import styles from '../styles/Register.module.css'
 
@@ -9,7 +10,6 @@ import { Input } from '../src/components/input/Input'
 import { Button } from '../src/components/button/Button'
 import { EmailValue } from '../src/shared/domain/EmailValue'
 import { UuidValue } from '../src/shared/domain/UuidValue'
-import { Http } from '../src/shared/infrastructure/Http'
 import { setErrorStyle, setError, clearError } from '../src/shared/infrastructure/ValidationInput'
 import { UserGetApiRepository } from '../src/user/infrastructure/get/UserGetApiRepository'
 import { GetUser } from '../src/user/application/get/GetUser'
@@ -33,9 +33,7 @@ export default function Register() {
     const [name, setName] = useState<string>("")
     const [nameBorder, setNameBorder] = useState<string>("")
     const [nameError, setNameError] = useState<string>("")
-    const [birthday, setBirthday] = useState<string>("")
-    const [birthdayBorder, setBirthdayBorder] = useState<string>("")
-    const [birthdayError, setBirthdayError] = useState<string>("")
+    const [birthday, setBirthday] = useState<Date>(new Date())
     const [gender, setGender] = useState<boolean>(false)
     const [email, setEmail] = useState<string>("")
     const [emailBorder, setEmailBorder] = useState<string>("")
@@ -58,7 +56,6 @@ export default function Register() {
     const register = async () => {
         const clearAll = () => {
             clearError(setNameBorder, setNameError)
-            clearError(setBirthdayBorder, setBirthdayError)
             clearError(setEmailBorder, setEmailError)
             clearError(setUsernameBorder, setUsernameError)
             clearError(setPasswordBorder, setPasswordError)
@@ -66,15 +63,12 @@ export default function Register() {
         }
 
         if (name === "" ||
-            birthday === "" ||
             email === "" ||
             username === "" ||
             password === "" ||
             repeatPassword === "") {
             if (name === "") setError(setNameBorder, setNameError, "Name not empty.")
             else clearError(setNameBorder, setNameError)
-            if (birthday === "") setError(setBirthdayBorder, setBirthdayError, "Birthday not empty.")
-            else clearError(setBirthdayBorder, setBirthdayError)
             if (email === "") setError(setEmailBorder, setEmailError, "Email not empty.")
             else clearError(setEmailBorder, setEmailError)
             if (username === "") setError(setUsernameBorder, setUsernameError, "Username not empty.")
@@ -103,7 +97,7 @@ export default function Register() {
         const user = new User(
             UuidValue.Generate(),
             name,
-            new Date(birthday),
+            birthday,
             gender,
             new EmailValue(email),
             username,
@@ -155,10 +149,10 @@ export default function Register() {
                 <Input type="text" style={{ border: nameBorder }} placeholder="Full name"
                     value={name} onChange={event => setName(event.target.value)} />
                 <small style={setErrorStyle}>{nameError}</small>
-                <Input type="date" style={{ textAlign: "center", fontSize: 18, border: birthdayBorder }}
-                    placeholder="Birthday" value={birthday}
-                    onChange={event => setBirthday(event.target.value)} />
-                <small style={setErrorStyle}>{birthdayError}</small>
+                <Input type="date" style={{ textAlign: "center", fontSize: 18 }}
+                    placeholder="Birthday" value={dayjs(birthday).format("YYYY-MM-DD")}
+                    onChange={event => 
+                        setBirthday(dayjs(event.target.value, "YYYY-MM-DD").toDate())} />
                 <div className={styles.formGender}>
                     <div className={`${styles.formGenderType}`}>
                         <label onClick={() => setGender(false)}>Male</label>

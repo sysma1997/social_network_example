@@ -145,7 +145,7 @@ export const Posts = (props: Props) => {
         }
     }
 
-    return <div>
+    return <div className={styles.posts}>
         {(isPublish) && <div className={styles.newPost}>
             <label className={styles.newPostTitle}>Publish post</label>
             <label className={styles.newPostFile}>
