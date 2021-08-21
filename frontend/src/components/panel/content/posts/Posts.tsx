@@ -125,8 +125,8 @@ export const Posts = (props: Props) => {
                         user.id,
                         title,
                         description,
-                        post.date, 
-                        `${process.env.API}/assets/images/${user.id.value}/posts/${image.name}`, 
+                        post.date,
+                        `/assets/images/${user.id.value}/posts/${image.name}`,
                         user
                     )
                 }

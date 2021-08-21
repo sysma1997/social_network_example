@@ -7,8 +7,8 @@ import { Dispatch, SetStateAction } from "react"
 
 interface Props {
     user: User,
-    setUser: Dispatch<SetStateAction<User>>, 
-    content: string | string[] | undefined, 
+    setUser: Dispatch<SetStateAction<User>>,
+    content: string | string[] | undefined,
     params?: any
 }
 
@@ -16,7 +16,7 @@ export const PanelContent = (props: Props) => {
     const { content } = props
 
     return <div className={styles.panel}>
-        {(content === "home") && <Posts user={props.user} /> || 
-        (content === "profile") && <Profile user={props.user} setUser={props.setUser} />}
+        {(content === "home") && <Posts user={props.user} /> ||
+            (content === "profile") && <Profile user={props.user} setUser={props.setUser} />}
     </div>
 }

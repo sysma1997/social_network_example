@@ -13,7 +13,7 @@ import { UserUpdateImageApiRepository } from "../../../../user/infrastructure/up
 import { UpdateImageUser } from "../../../../user/application/updateImage/UpdateImageUser";
 
 interface Props {
-    user: User, 
+    user: User,
     setUser: Dispatch<SetStateAction<User>>
 }
 
@@ -29,22 +29,20 @@ export const Profile = (props: Props) => {
         const repository = new UserUpdateImageApiRepository()
         const updateImage = new UpdateImageUser(repository)
 
-        if(await updateImage.init(image)) {
-            const urlImage = URL.createObjectURL(image)
+        if (await updateImage.init(image)) {
             const userUpdate = new User(
-                user.id, 
-                user.name, 
-                user.birthday, 
-                user.gender, 
-                user.email, 
-                user.username, 
-                user.password, 
-                user.valid, 
-                urlImage
+                user.id,
+                user.name,
+                user.birthday,
+                user.gender,
+                user.email,
+                user.username,
+                user.password,
+                user.valid,
+                `/assets/images/${user.id.value}/profile/${image.name}`
             )
-            
+
             setUser(userUpdate)
-            URL.revokeObjectURL(urlImage)
         }
     }
     const clickEditProfile = () => {
@@ -66,7 +64,7 @@ export const Profile = (props: Props) => {
             <div className={styles.bodyInformation}>
                 <div className={styles.bodyInformationCard}>
                     <label className={styles.bodyInformationCardTitle}>Information</label>
-                    
+
                     <label className={styles.bodyInformationCardText}>
                         <FontAwesomeIcon className={styles.bodyInformationCardIcon} icon={faUser} />
                         {user.name}

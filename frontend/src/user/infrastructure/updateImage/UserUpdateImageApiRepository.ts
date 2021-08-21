@@ -7,8 +7,7 @@ export class UserUpdateImageApiRepository implements UserUpdateImageRepository {
         params.append("image", image)
 
         const response = await Http.Init("PUT", "user/updateimage", params)
-        console.log(response)
-        if(response.status !== 200) {
+        if (response.status !== 200) {
             throw new Error(response.result)
         }
 

@@ -40,12 +40,16 @@ export class UserUpdateImageController {
             const getImage = new GetImage(getImageRepository)
 
             let image: string | null = null
-            try {
-                image = `/public${await getImage.init(res.locals.userId)}`
-            } catch (error: any) {
-                connection.close()
-                res.status(400).send(error.toString())
-                return
+
+            let isImage = await getImage.init(res.locals.userId)
+            if (isImage) {
+                try {
+                    image = `/public${isImage}`
+                } catch (error: any) {
+                    connection.close()
+                    res.status(400).send(error.toString())
+                    return
+                }
             }
 
             if (image) {
