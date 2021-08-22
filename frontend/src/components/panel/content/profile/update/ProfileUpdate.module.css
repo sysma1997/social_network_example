@@ -1,0 +1,128 @@
+.profileUpdate {
+    background: rgba(128, 128, 128, 0.5);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.panel {
+    background-color: whitesmoke;
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 0.1rem;
+    box-shadow: 0 0.1rem 0.3rem gray;
+
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+}
+
+.header {
+    background-color: white;
+    border-bottom: 1px solid gray;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+.header label {
+    color: var(--color-primary);
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.header .close {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+}
+.header .close:hover {
+    cursor: pointer;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+
+    flex: 1;
+}
+.body .menu {
+    border-right: 1px solid gray;
+    list-style: none;
+    
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+
+    animation-name: menu;
+    animation-duration: 0.5s;
+}
+@keyframes menu {
+    from {
+        width: 0;
+    }
+    to {
+        width: 10rem;
+    }
+}
+.body .menu li {
+    border-bottom: 1px solid gray;
+    color: var(--color-primary);
+
+    padding: 0.3rem 1rem;
+}
+.body .menu li:hover {
+    color: var(--color-secondary);
+    background-color: white;
+    cursor: pointer;
+}
+.body .content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    flex: 1;
+}
+.body .content .item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.body .content .item input[type="date"] {
+    text-align: center;
+}
+.body .content .itemGender {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 3rem;
+    margin-bottom: 1rem;
+}
+.body .content .hideMenu {
+    background-color: white;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 0 50% 50% 0;
+
+    position: absolute;
+    left: 0;
+    bottom: 3rem;
+    padding: 0.5rem;
+}
+.body .content .hideMenu:hover {
+    color: var(--color-secondary);
+    cursor: pointer;
+}

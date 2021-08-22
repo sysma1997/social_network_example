@@ -8,6 +8,7 @@ interface Props {
     type?: string,
     value?: any,
     checked?: boolean,
+    disabled?: boolean,
 
     onChange?: (event: ChangeEvent<HTMLInputElement>) => any
     onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => any
@@ -20,5 +21,6 @@ export const Input = (props: Props) => <input
     placeholder={props.placeholder}
     value={props.value}
     checked={props.checked}
+    disabled={props.disabled}
     onChange={props.onChange}
     onKeyDown={props.onKeyDown} />

@@ -16,7 +16,9 @@ export const PanelContent = (props: Props) => {
     const { content } = props
 
     return <div className={styles.panel}>
-        {(content === "home") && <Posts user={props.user} /> ||
-            (content === "profile") && <Profile user={props.user} setUser={props.setUser} />}
+        {
+            (content === "home") && <Posts user={props.user} /> ||
+            (content === "profile") && <Profile user={props.user} setUser={props.setUser} />
+        }
     </div>
 }

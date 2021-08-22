@@ -11,6 +11,7 @@ import { Posts } from "../posts/Posts";
 import { Button } from "../../../button/Button";
 import { UserUpdateImageApiRepository } from "../../../../user/infrastructure/updateImage/UserUpdateImageApiRepository";
 import { UpdateImageUser } from "../../../../user/application/updateImage/UpdateImageUser";
+import { ProfileUpdate } from "./update/ProfileUpdate";
 
 interface Props {
     user: User,
@@ -19,6 +20,8 @@ interface Props {
 
 export const Profile = (props: Props) => {
     const { user, setUser } = props
+
+    const [modal, setModal] = useState<boolean>(false)
 
     const changeUpdateImageProfile = async (event: ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files) {
@@ -45,9 +48,7 @@ export const Profile = (props: Props) => {
             setUser(userUpdate)
         }
     }
-    const clickEditProfile = () => {
-        console.log(user)
-    }
+    const clickEditProfile = () => setModal(true)
 
     return <div>
         <div className={styles.header}>
@@ -86,12 +87,17 @@ export const Profile = (props: Props) => {
                         {0}
                     </label>
 
-                    <Button onClick={clickEditProfile}>Edit</Button>
+                    <Button onClick={clickEditProfile}>Update</Button>
                 </div>
             </div>
             <div className={styles.bodyPosts}>
                 <Posts user={user} />
             </div>
         </div>
+
+        {(modal) && <ProfileUpdate
+            close={() => setModal(false)}
+            user={user}
+            setUser={setUser} />}
     </div>
 }
