@@ -8,6 +8,8 @@ import { User } from "../../../../../user/domain/User"
 import { Input } from "../../../../input/Input"
 import { Button } from "../../../../button/Button"
 import { setErrorStyle, setError, clearError } from "../../../../../shared/infrastructure/ValidationInput"
+import { UserUpdateApiRepository } from "../../../../../user/infrastructure/update/UserUpdateApiRepository"
+import { UpdateUser } from "../../../../../user/application/update/UpdateUser"
 
 interface Props {
     close: () => void,
@@ -32,6 +34,8 @@ export const ProfileUpdate = (props: Props) => {
     const [username, setUsername] = useState<string>("")
     const [usernameBorder, setUsernameBorder] = useState<string>("")
     const [usernameError, setUsernameError] = useState<string>("")
+    const [profileMessage, setProfileMessage] = useState<string>("")
+    const [profileMessageColor, setProfileMessageColor] = useState<string>("")
 
     useEffect(() => {
         setName(user.name)
@@ -42,7 +46,7 @@ export const ProfileUpdate = (props: Props) => {
 
     const clickDisplay = (menu: string) => setMenu(menu)
     const clickHideMenu = () => setHideMenu(!hideMenu)
-    const clickUpdateProfile = () => {
+    const clickUpdateProfile = async () => {
         const clearAll = () => {
             clearError(setNameBorder, setNameError)
             clearError(setUsernameBorder, setUsernameError)
@@ -56,6 +60,27 @@ export const ProfileUpdate = (props: Props) => {
             else clearError(setUsernameBorder, setUsernameError)
         }
         clearAll()
+
+        const userUpdate = new User(
+            user.id,
+            name,
+            birthday,
+            gender,
+            user.email,
+            username,
+            user.password,
+            user.valid,
+            user.image
+        )
+
+        const repository = new UserUpdateApiRepository()
+        const update = new UpdateUser(repository)
+
+        if (await update.init(userUpdate)) {
+            setUser(userUpdate)
+            setProfileMessage("Profile update success.")
+            setProfileMessageColor("green")
+        }
     }
 
     return <div className={styles.profileUpdate}>
@@ -106,12 +131,18 @@ export const ProfileUpdate = (props: Props) => {
                                 value={username} onChange={event => setUsername(event.target.value)} />
                             <label style={setErrorStyle}>{usernameError}</label>
                         </div>
+                        <label className={styles.message} style={{ color: profileMessageColor }}>
+                            {profileMessage}
+                        </label>
                         <Button onClick={clickUpdateProfile}>Update</Button>
                     </> || (menu === "email") && <>
                         <div className={styles.item}>
                             <label>Update email</label>
                             <Input />
                         </div>
+                        <label className={styles.message} style={{ color: profileMessageColor }}>
+                            {profileMessage}
+                        </label>
                         <Button>Update</Button>
                     </> || (menu === "password") && <>
                         <div className={styles.item}>
@@ -126,6 +157,9 @@ export const ProfileUpdate = (props: Props) => {
                             <label>Repeat password</label>
                             <Input />
                         </div>
+                        <label className={styles.message} style={{ color: profileMessageColor }}>
+                            {profileMessage}
+                        </label>
                         <Button>Update</Button>
                     </>}
                     <button className={styles.hideMenu} onClick={clickHideMenu}>

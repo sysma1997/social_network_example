@@ -16,25 +16,25 @@ export class UserUpdateController {
         this.router.put("/", async (req, res) => {
             const { name, birthday, gender, username } = req.body
 
-            if ((!name || typeof(name) !== "string") || 
-                (!birthday || typeof(birthday) !== "string") || 
-                typeof(gender) !== "boolean" || 
-                (!username || typeof(username) !== "string")) {
+            if ((!name || typeof (name) !== "string") ||
+                (!birthday || typeof (birthday) !== "string") ||
+                typeof (gender) !== "boolean" ||
+                (!username || typeof (username) !== "string")) {
                 let message = ""
 
-                if(!name)
+                if (!name)
                     message += "Name is required.\n"
-                else if(typeof(name) !== "string")
+                else if (typeof (name) !== "string")
                     message += "Name not is string.\n"
-                if(!birthday)
+                if (!birthday)
                     message += "Birthday is required.\n"
-                else if(typeof(birthday) !== "string")
+                else if (typeof (birthday) !== "string")
                     message += "Birthday not is string.\n"
-                if(typeof(gender) !== "boolean")
+                if (typeof (gender) !== "boolean")
                     message += "Gender not is boolean.\n"
-                if(!username)
+                if (!username)
                     message += "Username is required."
-                else if(typeof(username) !== "string")
+                else if (typeof (username) !== "string")
                     message += "Username not is string."
 
                 res.status(400).send(message)
@@ -49,13 +49,13 @@ export class UserUpdateController {
 
             try {
                 await update.init(
-                    res.locals.userId, 
-                    name, 
-                    new Date(birthday), 
-                    gender, 
+                    res.locals.userId,
+                    name,
+                    new Date(birthday),
+                    gender,
                     username
                 )
-            } catch(error: any) {
+            } catch (error: any) {
                 connection.close()
                 res.status(400).send(error.toString())
                 return

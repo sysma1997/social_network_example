@@ -110,6 +110,10 @@
     margin: 0 3rem;
     margin-bottom: 1rem;
 }
+.body .content .message {
+    font-weight: bold;
+    text-align: center;
+}
 .body .content .hideMenu {
     background-color: white;
     color: var(--color-primary);
